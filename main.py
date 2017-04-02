@@ -3,20 +3,23 @@ import pygame
 import random
 
 def main():
+    # Defines the screen size and times per second the game updates
     WIDTH = 360
     HEIGHT = 480
     FPS = 30
 
-    # define colors
+    # define basic debug colors
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
     RED = (255, 0, 0)
     GREEN = (0, 255, 0)
     BLUE = (0, 0, 255)
 
+    # Creates a group that all sprites in the game must be added to
+    # Used for updates
     all_sprites = pygame.sprite.Group()
 
-    # Initialize pygame and create window
+    # Initialize pygame as well as sound capabilities and create window
     pygame.init()
     pygame.mixer.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -26,7 +29,7 @@ def main():
     # Game Loop
     running = True
     while running:
-        # keep loop running at the right speed
+        # Keeps loop running at the right speed
         clock.tick(FPS)
         # Process input (events)
         for event in pygame.event.get():
@@ -41,8 +44,10 @@ def main():
         screen.fill(BLACK)
         all_sprites.draw(screen)
         # *after* drawing everything, flip the display
+        # This makes the game run faster as its not updating each pixel
+        # Instead it updates everything "behind" the screen and then shows it
         pygame.display.flip()
 
     pygame.quit()
-    
+
 main()
