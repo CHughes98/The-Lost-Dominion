@@ -1,6 +1,6 @@
 WIDTH = 360
 HEIGHT = 480
-FPS = 30
+FPS = 60
 
 # define colors
 WHITE = (255, 255, 255)
