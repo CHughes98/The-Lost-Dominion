@@ -34,12 +34,10 @@ class Player(pygame.sprite.Sprite):
         self.rect.bottom += 5
 
     def moveDown(self):
-	self.rect.bottom -= 5
+        self.rect.bottom -= 5
 
     def moveLeft(self):
-	self.rect.centerx += 5
+	    self.rect.centerx += 5
 
     def moveRight(self):
-	self.rect.centerx -= 5
-
-
+	    self.rect.centerx -= 5

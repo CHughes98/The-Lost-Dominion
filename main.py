@@ -2,9 +2,9 @@
 import pygame
 import random
 import settings
-import playerclass
-import mobclass
-import levelclass
+from playerclass import Player
+# from mobclass import Mob
+# from levelclass import Level
 from os import path
 
 def draw_text(surf, text, size, x, y):
@@ -54,15 +54,15 @@ class Game:
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_SPACE:
 					self.player.strike()
-					keystate = pygame.key.get_pressed()
-				if keystate[pygame.K_a]:
-					self.player.moveRight()
-				if keystate[pygame.K_d]:
+				keystate = pygame.key.get_pressed()
+				if keystate[pygame.K_d] or keystate[pygame.K_RIGHT]:
 					self.player.moveLeft()
-				if keystate[pygame.K_s]:
-					self.player.moveDown()
-				if keystate[pygame.K_w]:
+				if keystate[pygame.K_a] or keystate[pygame.K_LEFT]:
+					self.player.moveRight()
+				if keystate[pygame.K_s] or keystate[pygame.K_DOWN]:
 					self.player.moveUp()
+				if keystate[pygame.K_w] or keystate[pygame.K_UP]:
+					self.player.moveDown()
 
 	def draw(self):
 		# Game loop - Draw
