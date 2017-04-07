@@ -2,7 +2,9 @@
 import pygame
 import random
 import settings
-import sprites
+import playerclass
+import mobclass
+import levelclass
 from os import path
 
 def draw_text(surf, text, size, x, y):
@@ -25,8 +27,8 @@ class Game:
     def new(self):
         # Start a New Game
         self.all_sprites = pygame.sprite.Group()
-        player = sprites.Player(settings.WIDTH / 2, settings.HEIGHT / 2)
-        self.all_sprites.add(player)
+        self.player = Player(settings.WIDTH / 2, settings.HEIGHT / 2)
+        self.all_sprites.add(self.player)
         self.run()
 
     def run(self):
@@ -51,7 +53,7 @@ class Game:
                 self.running = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    player.strike()
+                    self.player.strike()
 
     def draw(self):
         # Game loop - Draw
