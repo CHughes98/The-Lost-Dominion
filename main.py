@@ -54,15 +54,18 @@ class Game:
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_SPACE:
 					self.player.strike()
-				keystate = pygame.key.get_pressed()
-				if keystate[pygame.K_d] or keystate[pygame.K_RIGHT]:
-					self.player.moveLeft()
-				if keystate[pygame.K_a] or keystate[pygame.K_LEFT]:
-					self.player.moveRight()
-				if keystate[pygame.K_s] or keystate[pygame.K_DOWN]:
-					self.player.moveUp()
-				if keystate[pygame.K_w] or keystate[pygame.K_UP]:
-					self.player.moveDown()
+		self.movement()
+
+	def movement(self):
+		keystate = pygame.key.get_pressed()
+		if keystate[pygame.K_d] or keystate[pygame.K_RIGHT]:
+			self.player.moveRight()
+		if keystate[pygame.K_a] or keystate[pygame.K_LEFT]:
+			self.player.moveLeft()
+		if keystate[pygame.K_s] or keystate[pygame.K_DOWN]:
+			self.player.moveDown()
+		if keystate[pygame.K_w] or keystate[pygame.K_UP]:
+			self.player.moveUp()
 
 	def draw(self):
 		# Game loop - Draw

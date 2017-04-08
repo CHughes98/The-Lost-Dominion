@@ -1,13 +1,17 @@
 import pygame
 import random
 import settings
+from os import path
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x_start, y_start, health = 100, armor = 0, multiplier = 1):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((30, 60))
-        pygame.Surface.fill(self.image, settings.RED)
-        # self.image.set_colorkey(BLACK)
+        img_dir = path.join(path.dirname(__file__), "img")
+        player_img = pygame.image.load(path.join(img_dir, "sprite.png")).convert()
+        # self.image = pygame.Surface((30, 60))
+        # pygame.Surface.fill(self.image, settings.RED)
+        self.image = pygame.transform.scale(player_img, (30, 60))
+        self.image.set_colorkey(settings.WHITE)
         self.rect = self.image.get_rect()
         self.rect.centerx = x_start
         self.rect.bottom = y_start
@@ -30,14 +34,14 @@ class Player(pygame.sprite.Sprite):
         self.dmg = self.roll * self.multiplier
         print(self.dmg)
 
-    def moveUp(self):
+    def moveDown(self):
         self.rect.bottom += 5
 
-    def moveDown(self):
+    def moveUp(self):
         self.rect.bottom -= 5
 
-    def moveLeft(self):
+    def moveRight(self):
 	    self.rect.centerx += 5
 
-    def moveRight(self):
+    def moveLeft(self):
 	    self.rect.centerx -= 5
