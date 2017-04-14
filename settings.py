@@ -1,5 +1,7 @@
-WIDTH = 360
-HEIGHT = 480
+#WIDTH = 360
+#HEIGHT = 480
+WIDTH = 740
+HEIGHT = 740
 FPS = 60
 
 # define colors
@@ -11,3 +13,9 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 CYAN = (0, 255, 255)
 MAGENTA = (255, 0, 255)
+
+
+#Mob Settings
+MOB_IMG = 'zoimbie1_hold.png'
+#MOB_SPEED = 150
+#MOB_HIT_RECT = pg.Rect(0,0, 30, 30)
