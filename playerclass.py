@@ -10,7 +10,7 @@ class Player(pygame.sprite.Sprite):
         player_img = pygame.image.load(path.join(img_dir, "sprite.png")).convert()
         # self.image = pygame.Surface((30, 60))
         # pygame.Surface.fill(self.image, settings.RED)
-        self.image = pygame.transform.scale(player_img, (30, 60))
+        self.image = pygame.transform.scale(player_img, (64, 64))
         self.image.set_colorkey(settings.WHITE)
         self.rect = self.image.get_rect()
         self.rect.centerx = x_start
