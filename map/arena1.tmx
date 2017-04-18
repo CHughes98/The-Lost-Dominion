@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="50" tilewidth="32" tileheight="32" nextobjectid="233">
  <tileset firstgid="1" name="Terrain" tilewidth="32" tileheight="32" tilecount="400" columns="20">
-  <image source="../../../../Documents/Terrain.png" width="640" height="640"/>
+  <image source="../img/Terrain.png" width="640" height="640"/>
   <terraintypes>
    <terrain name="Path" tile="-1"/>
    <terrain name="Water" tile="-1"/>
@@ -465,7 +465,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,202,0,0,0,202,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,202,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="Obstancles" visible="0">
+ <objectgroup name="Obstancles">
   <object id="1" name="obstacles" x="744" y="992" width="16" height="64"/>
   <object id="2" name="obstacles" x="712" y="832" width="16" height="64"/>
   <object id="3" name="obstacles" x="616" y="928" width="16" height="64"/>
