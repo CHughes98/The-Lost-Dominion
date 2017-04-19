@@ -4,7 +4,7 @@ import settings
 vec = pygame.math.Vector2
 
 class Player(pygame.sprite.Sprite):
-	def __init__(self, game, x_start, y_start, health = 100, armor = 0, multiplier = 1):
+	def __init__(self, game, x_start, y_start, health = 100, armor = 0, multiplier = 1.15):
 		self.groups = game.all_sprites
 		pygame.sprite.Sprite.__init__(self, self.groups)
 		self.image = pygame.Surface((30, 60))
@@ -35,8 +35,11 @@ class Player(pygame.sprite.Sprite):
 
 	def strike(self):
 		self.roll = random.randrange(1,7)
+		print(self.roll)
 		self.dmg = self.roll * self.multiplier
+		'''Maybe make also add a wave multiplier for damage increase, if we dont have that already'''
 		print(self.dmg)
+		
 
 	def moveUp(self):
 		self.rect.bottom += 5
