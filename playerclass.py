@@ -45,3 +45,15 @@ class Player(pygame.sprite.Sprite):
 
     def moveLeft(self):
 	    self.rect.centerx -= 5
+		
+		
+		
+	def attack(self):
+		pygame.drawCircle(32)
+		hits = pygame.sprites.spritescollide(player.sprite, mob.sprite, false)
+		if hits:
+			for hit in hits:
+				dmg = self.strike
+				mob.health -= hit
+		
+		return hits
