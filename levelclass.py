@@ -46,4 +46,18 @@ class Level:
         map_top = pygame.Surface((self.width, self.height))
         self.render_top(map_top)
         return map_top
+    
+    def roll_stats(self, player):
+        end_of_wave_roll = random.choice(1, 3)
+        if(end_of_wave_roll == 1):
+            player.health += health.points(25)
+            print(player.health)
+        if(end_of_wave_roll == 2):
+            player.health -= health.points(15)
+            print(player.health)
+        else:
+            player.strength += strength(5)
+            print(player.strength)
+            
+        return
         
