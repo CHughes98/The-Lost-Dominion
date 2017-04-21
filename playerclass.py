@@ -38,7 +38,7 @@ class Player(pygame.sprite.Sprite):
 		print(self.roll)
 		self.dmg = self.roll * self.multiplier
 		'''Maybe make also add a wave multiplier for damage increase, if we dont have that already'''
-		print(self.dmg)
+		return self.dmg
 		
 
 	def moveUp(self):
