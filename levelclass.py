@@ -60,4 +60,3 @@ class Level:
             print(player.strength)
             
         return
-        

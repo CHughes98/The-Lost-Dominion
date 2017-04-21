@@ -1,11 +1,13 @@
 #Imports
 import pygame
 import random
-import settings
-from playerclass import Player
-# from mobclass import Mob
-from levelclass import Level
-from os import path
+#import settings
+from settings import *
+from playerclass import *
+from mobclass import *
+from levelclass import *
+from os import *
+import os
 
 def draw_text(surf, text, size, x, y):
 	font = pygame.font.Font(font_name, size)
@@ -36,19 +38,32 @@ class Game:
 		pygame.display.set_caption("My Game")
 		self.clock = pygame.time.Clock()
 		self.running = True
+		self.load_data()
+
+	def load_data(self):
+		game_folder = os.path.dirname(__file__)
+		img_folder = os.path.join(game_folder, 'img')
+		#self.map = Map(os.path.join(game_folder, 'map.txt'))
+		#self.player_img = pg.image.load(os.path.join(img_folder, PLAYER_IMG)).convert_alpha()
+		self.mob_img = pygame.image.load(os.path.join(img_folder, MOB_IMG)).convert_alpha()
+
 
 	def new(self):
-		# Start a New Game
+        # Start a New Game
 		self.all_sprites = pygame.sprite.Group()
-		self.player = Player(settings.WIDTH / 2, settings.HEIGHT / 2)
+		self.player = Player(self, settings.WIDTH / 2, settings.HEIGHT / 2) 
 		self.all_sprites.add(self.player)
+		self.mobs = pygame.sprite.Group()
+		self.mob = Mob(self, settings.WIDTH / 4, settings.HEIGHT / 4, 10, 1)
+		self.all_sprites.add(self.mob)
 		self.run()
+
 
 	def run(self):
 		# Game loop
 		self.playing = True
 		while self.playing:
-			self.clock.tick(settings.FPS)
+			self.dt = self.clock.tick(settings.FPS)/1000#For seconds
 			self.events()
 			self.update()
 			self.draw()
@@ -73,12 +88,16 @@ class Game:
 		keystate = pygame.key.get_pressed()
 		if keystate[pygame.K_d] or keystate[pygame.K_RIGHT]:
 			self.player.moveRight()
+			self.player.pos = self.player.moveRightPos()
 		if keystate[pygame.K_a] or keystate[pygame.K_LEFT]:
 			self.player.moveLeft()
+			self.player.pos = self.player.moveLeftPos()
 		if keystate[pygame.K_s] or keystate[pygame.K_DOWN]:
 			self.player.moveDown()
+			self.player.pos = self.player.moveDownPos()
 		if keystate[pygame.K_w] or keystate[pygame.K_UP]:
 			self.player.moveUp()
+			self.player.pos = self.player.moveUpPos()
 
 	def draw(self):
 		# Game loop - Draw
