@@ -21,6 +21,7 @@ class Game:
 		pygame.mixer.init()
 		self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
 		map_folder = path.join(path.dirname(__file__), "map")
+		self.obstacles = pygame.sprite.Group()
 
 		#Renders the base of the map(below player)
 		self.level_base = Level(path.join(map_folder, 'arena1.tmx'))
@@ -33,14 +34,21 @@ class Game:
 		self.level_top_img.set_colorkey(settings.BLACK)
 		self.level_top_rect = self.level_top_img.get_rect()
 
-		pygame.display.set_caption("My Game")
+		#Obstacle
+		self.obstacle = Level(path.join(map_folder, 'arena1.tmx'))
+		self.obstacle_img = self.obstacle.make_obstacles()
+		self.obstacle_img.set_colorkey(settings.BLACK)
+		self.object_layer_rect = self.obstacle_img.get_rect()
+
+
+		pygame.display.set_caption("The Lost Dominion")
 		self.clock = pygame.time.Clock()
 		self.running = True
 
 	def new(self):
 		# Start a New Game
 		self.all_sprites = pygame.sprite.Group()
-		self.player = Player(settings.WIDTH / 2, settings.HEIGHT / 2)
+		self.player = Player(50, 500)
 		self.all_sprites.add(self.player)
 		self.run()
 
@@ -64,6 +72,7 @@ class Game:
 			if event.type == pygame.QUIT:
 				self.playing = False
 				self.running = False
+			# Check for strike
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_SPACE:
 					self.player.strike()
@@ -80,10 +89,29 @@ class Game:
 		if keystate[pygame.K_w] or keystate[pygame.K_UP]:
 			self.player.moveUp()
 
+	# def check_for_collisions(self):
+	# 	collisions = pygame.sprite.spritecollide(self.player, self.obstacles, False)
+	# 	if collisions:
+	# 		if collisions[0].rect.centerx > self.player.centerx:
+	# 			self.player.centerx = collisions[0].rect.left - self.player.width / 2
+	# 		if collision[0].rect.centerx < self.player.centerx:
+	# 			self.player.centerx = collision[0].rect.right + self.player.width / 2
+	# 			self.player.velocity = 0
+
+	def attack(self):
+		pygame.drawCircle(32)
+		hits = pygame.sprite.spritecollide(self.player, self.mobs, False)
+		if hits:
+			for hit in hits:
+				dmg = player.strike()
+				mob.health -= dmg
+
 	def draw(self):
 		# Game loop - Draw
 		# self.screen.fill(settings.BLACK)
 		self.screen.blit(self.level_base_img, self.level_base_rect)
+		self.screen.blit(self.obstacle_img, self.object_layer_rect)
+		self.obstacles.draw(self.screen)
 		self.all_sprites.draw(self.screen)
 		self.screen.blit(self.level_top_img, self.level_top_rect)
 		# *after* drawing everything, flip the display

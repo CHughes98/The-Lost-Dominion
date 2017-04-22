@@ -14,20 +14,12 @@ class Player(pygame.sprite.Sprite):
         self.image.set_colorkey(settings.WHITE)
         self.rect = self.image.get_rect()
         self.rect.centerx = x_start
-        self.rect.bottom = y_start
+        self.rect.centery = y_start
         self.hp = health
-        self.amr = armor
+        # self.amr = armor
         self.multiplier = multiplier
-        self.speedx = 0
-        self.speedy = 0
+        self.velocity = 5
         self.dmg = 0
-
-    def update(self):
-        self.speedx = 0
-        self.speedy = 0
-        keystate = pygame.key.get_pressed()
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
 
     def strike(self):
         self.roll = random.randrange(1,7)
@@ -35,15 +27,18 @@ class Player(pygame.sprite.Sprite):
         print(self.dmg)
 
     def moveDown(self):
-        self.rect.bottom += 5
+        self.rect.centery += self.velocity
 
     def moveUp(self):
-        self.rect.bottom -= 5
+        self.rect.centery -= self.velocity
 
     def moveRight(self):
-	    self.rect.centerx += 5
+	    self.rect.centerx += self.velocity
 
     def moveLeft(self):
+<<<<<<< HEAD
+	    self.rect.centerx -= self.velocity
+=======
 	    self.rect.centerx -= 5
 		
 		
@@ -57,3 +52,4 @@ class Player(pygame.sprite.Sprite):
 				mob.health -= hit
 		
 		return hits
+>>>>>>> df42ad2cf8f90210deda46214d715ff016111b29
