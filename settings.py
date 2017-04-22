@@ -14,6 +14,8 @@ YELLOW = (255, 255, 0)
 CYAN = (0, 255, 255)
 MAGENTA = (255, 0, 255)
 
+# Player settings
+PLAYER_IMG = 'sprite.png'
 
 #Mob Settings
 MOB_IMG = 'zoimbie1_hold.png'

@@ -34,7 +34,7 @@ class Game:
 		self.level_top_img = self.level_top.make_map_top()
 		self.level_top_img.set_colorkey(settings.BLACK)
 		self.level_top_rect = self.level_top_img.get_rect()
-		
+
 		#Obstacle
 		self.obstacle = Level(path.join(map_folder, 'arena1.tmx'))
 		self.obstacle_img = self.obstacle.make_obstacles()
@@ -50,14 +50,14 @@ class Game:
 		game_folder = os.path.dirname(__file__)
 		img_folder = os.path.join(game_folder, 'img')
 		#self.map = Map(os.path.join(game_folder, 'map.txt'))
-		#self.player_img = pg.image.load(os.path.join(img_folder, PLAYER_IMG)).convert_alpha()
+		self.player_img = pygame.image.load(os.path.join(img_folder, PLAYER_IMG)).convert_alpha()
 		self.mob_img = pygame.image.load(os.path.join(img_folder, MOB_IMG)).convert_alpha()
 
 
 	def new(self):
         # Start a New Game
 		self.all_sprites = pygame.sprite.Group()
-		self.player = Player(self, settings.WIDTH / 2, settings.HEIGHT / 2) 
+		self.player = Player(self, settings.WIDTH / 2, settings.HEIGHT / 2)
 		self.all_sprites.add(self.player)
 		self.mobs = pygame.sprite.Group()
 		self.mob = Mob(self, settings.WIDTH / 4, settings.HEIGHT / 4, 10, 1)
@@ -104,7 +104,7 @@ class Game:
 		if keystate[pygame.K_w] or keystate[pygame.K_UP]:
 			self.player.moveUp()
 			self.player.pos = self.player.moveUpPos()
-			
+
 	# def check_for_collisions(self):
 	# 	collisions = pygame.sprite.spritecollide(self.player, self.obstacles, False)
 	# 	if collisions:
@@ -127,7 +127,6 @@ class Game:
 		# self.screen.fill(settings.BLACK)
 		self.screen.blit(self.level_base_img, self.level_base_rect)
 		self.screen.blit(self.obstacle_img, self.object_layer_rect)
-		self.obstacles.draw(self.screen)
 		self.all_sprites.draw(self.screen)
 		self.screen.blit(self.level_top_img, self.level_top_rect)
 		# *after* drawing everything, flip the display

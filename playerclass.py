@@ -7,8 +7,10 @@ class Player(pygame.sprite.Sprite):
 	def __init__(self, game, x_start, y_start, health = 100, armor = 0, multiplier = 1):
 		self.groups = game.all_sprites
 		pygame.sprite.Sprite.__init__(self, self.groups)
-		self.image = pygame.Surface((30, 60))
-		pygame.Surface.fill(self.image, settings.RED)
+		self.image = game.player_img
+		self.image = pygame.transform.scale(self.image, (64, 64))
+		# self.image = pygame.Surface((30, 60))
+		# pygame.Surface.fill(self.image, settings.RED)
 		# self.image.set_colorkey(BLACK)
 		self.rect = self.image.get_rect()
 		self.rect.centerx = x_start
@@ -24,37 +26,30 @@ class Player(pygame.sprite.Sprite):
 
 	#def update(self):
 		#self.pos = vec(self.rect.centerx, 5 + self.rect.bottom)
-		
 
-	
-	def moveUp(self):
+
+
+	def moveDown(self):
 		self.rect.bottom += 5
 		#self.pos = vec(self.rect.centerx, 5 + self.rect.bottom)
-	def moveDown(self):
+	def moveUp(self):
 		self.rect.bottom -= 5
 		#self.pos = vec(self.rect.centerx, self.rect.bottom - 5)
-	def moveLeft(self):
+	def moveRight(self):
 		self.rect.centerx += 5
 		#self.pos = vec(self.rect.centerx + 5, self.rect.bottom)
-	def moveRight(self):
+	def moveLeft(self):
 		self.rect.centerx -= 5
 		#self.pos = vec(self.rect.centerx -5, self.rect.bottom)
-	def moveUpPos(self):
+	def moveDownPos(self):
 		#self.rect.bottom += 5
 		return vec(self.rect.centerx, 5 + self.rect.bottom)
-	def moveDownPos(self):
+	def moveUpPos(self):
 		#self.rect.bottom -= 5
 		return vec(self.rect.centerx, self.rect.bottom - 5)
-	def moveLeftPos(self):
+	def moveRightPos(self):
 		#self.rect.centerx += 5
 		return vec(self.rect.centerx + 5, self.rect.bottom)
-	def moveRightPos(self):
+	def moveLeftPos(self):
 		#self.rect.centerx -= 5
 		return vec(self.rect.centerx -5, self.rect.bottom)
-
-
-
-
-
-
-
