@@ -2,7 +2,6 @@ import pygame
 import pytmx
 import random
 import settings
-from obstacleclass import Obstacle
 from os import path
 
 class Level:
@@ -15,10 +14,21 @@ class Level:
 
     def render_base(self, surface):
         ti = self.tmxdata.get_tile_image_by_gid
-        self.num = 0
         for layer in self.tmxdata.visible_layers:
             self.num += 1
             if self.num < 9:
+                if isinstance(layer, pytmx.TiledTileLayer):
+                    for x, y, gid, in layer:
+                        tile = ti(gid)
+                        if tile:
+                            surface.blit(tile, (x * self.tmxdata.tilewidth,
+                                                y * self.tmxdata.tileheight))
+
+    def render_top(self, surface):
+        ti = self.tmxdata.get_tile_image_by_gid
+        for layer in self.tmxdata.visible_layers:
+            self.num += 1
+            if self.num > 9:
                 if isinstance(layer, pytmx.TiledTileLayer):
                     for x, y, gid, in layer:
                         tile = ti(gid)
@@ -37,20 +47,6 @@ class Level:
                             surface.blit(tile, (x * self.tmxdata.tilewidth, y * self.tmxdata.tileheight))
                             # print(x, y, gid)
 
-
-
-    def render_top(self, surface):
-        ti = self.tmxdata.get_tile_image_by_gid
-        for layer in self.tmxdata.visible_layers:
-            self.num += 1
-            if self.num >= 10:
-                if isinstance(layer, pytmx.TiledTileLayer):
-                    for x, y, gid, in layer:
-                        tile = ti(gid)
-                        if tile:
-                            surface.blit(tile, (x * self.tmxdata.tilewidth,
-                                                y * self.tmxdata.tileheight))
-
     def make_map_base(self):
         map_base = pygame.Surface((self.width, self.height))
         self.render_base(map_base)
@@ -65,9 +61,7 @@ class Level:
         map_top = pygame.Surface((self.width, self.height))
         self.render_top(map_top)
         return map_top
-<<<<<<< HEAD
-=======
-    
+
     def roll_stats(self, player):
         end_of_wave_roll = random.choice(1, 3)
         if(end_of_wave_roll == 1):
@@ -79,7 +73,5 @@ class Level:
         else:
             player.strength += strength(5)
             print(player.strength)
-            
+
         return
-        
->>>>>>> df42ad2cf8f90210deda46214d715ff016111b29

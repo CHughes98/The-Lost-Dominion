@@ -1,55 +1,55 @@
 import pygame
 import random
 import settings
-from os import path
+vec = pygame.math.Vector2
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x_start, y_start, health = 100, armor = 0, multiplier = 1):
-        pygame.sprite.Sprite.__init__(self)
-        img_dir = path.join(path.dirname(__file__), "img")
-        player_img = pygame.image.load(path.join(img_dir, "sprite.png")).convert()
-        # self.image = pygame.Surface((30, 60))
-        # pygame.Surface.fill(self.image, settings.RED)
-        self.image = pygame.transform.scale(player_img, (64, 64))
-        self.image.set_colorkey(settings.WHITE)
-        self.rect = self.image.get_rect()
-        self.rect.centerx = x_start
-        self.rect.centery = y_start
-        self.hp = health
-        # self.amr = armor
-        self.multiplier = multiplier
-        self.velocity = 5
-        self.dmg = 0
+	def __init__(self, game, x_start, y_start, health = 100, armor = 0, multiplier = 1):
+		self.groups = game.all_sprites
+		pygame.sprite.Sprite.__init__(self, self.groups)
+		self.image = game.player_img
+		self.image = pygame.transform.scale(self.image, (64, 64))
+		# self.image = pygame.Surface((30, 60))
+		# pygame.Surface.fill(self.image, settings.RED)
+		# self.image.set_colorkey(BLACK)
+		self.rect = self.image.get_rect()
+		self.rect.centerx = x_start
+		self.rect.bottom = y_start
+		self.vel = vec(0,0)
+		self.pos = vec(self.rect.centerx, self.rect.bottom)
+		self.hp = health
+		self.amr = armor
+		self.multiplier = multiplier
+		#self.speedx = 0
+		#self.speedy = 0
+		self.dmg = 0
 
-    def strike(self):
-        self.roll = random.randrange(1,7)
-        self.dmg = self.roll * self.multiplier
-        print(self.dmg)
+	#def update(self):
+		#self.pos = vec(self.rect.centerx, 5 + self.rect.bottom)
 
-    def moveDown(self):
-        self.rect.centery += self.velocity
 
-    def moveUp(self):
-        self.rect.centery -= self.velocity
 
-    def moveRight(self):
-	    self.rect.centerx += self.velocity
-
-    def moveLeft(self):
-<<<<<<< HEAD
-	    self.rect.centerx -= self.velocity
-=======
-	    self.rect.centerx -= 5
-		
-		
-		
-	def attack(self):
-		pygame.drawCircle(32)
-		hits = pygame.sprites.spritescollide(player.sprite, mob.sprite, false)
-		if hits:
-			for hit in hits:
-				dmg = self.strike
-				mob.health -= hit
-		
-		return hits
->>>>>>> df42ad2cf8f90210deda46214d715ff016111b29
+	def moveDown(self):
+		self.rect.bottom += 5
+		#self.pos = vec(self.rect.centerx, 5 + self.rect.bottom)
+	def moveUp(self):
+		self.rect.bottom -= 5
+		#self.pos = vec(self.rect.centerx, self.rect.bottom - 5)
+	def moveRight(self):
+		self.rect.centerx += 5
+		#self.pos = vec(self.rect.centerx + 5, self.rect.bottom)
+	def moveLeft(self):
+		self.rect.centerx -= 5
+		#self.pos = vec(self.rect.centerx -5, self.rect.bottom)
+	def moveDownPos(self):
+		#self.rect.bottom += 5
+		return vec(self.rect.centerx, 5 + self.rect.bottom)
+	def moveUpPos(self):
+		#self.rect.bottom -= 5
+		return vec(self.rect.centerx, self.rect.bottom - 5)
+	def moveRightPos(self):
+		#self.rect.centerx += 5
+		return vec(self.rect.centerx + 5, self.rect.bottom)
+	def moveLeftPos(self):
+		#self.rect.centerx -= 5
+		return vec(self.rect.centerx -5, self.rect.bottom)
