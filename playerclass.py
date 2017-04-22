@@ -8,7 +8,6 @@ class Player(pygame.sprite.Sprite):
 		self.groups = game.all_sprites
 		pygame.sprite.Sprite.__init__(self, self.groups)
 		self.image = game.player_img
-		self.image = pygame.transform.scale(self.image, (64, 64))
 		# self.image = pygame.Surface((30, 60))
 		# pygame.Surface.fill(self.image, settings.RED)
 		# self.image.set_colorkey(BLACK)

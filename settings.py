@@ -1,7 +1,7 @@
-#WIDTH = 360
-#HEIGHT = 480
-WIDTH = 740
-HEIGHT = 740
+WIDTH = 720
+HEIGHT = 720
+# WIDTH = 740
+# HEIGHT = 740
 FPS = 60
 
 # define colors
@@ -15,9 +15,9 @@ CYAN = (0, 255, 255)
 MAGENTA = (255, 0, 255)
 
 # Player settings
-PLAYER_IMG = 'sprite.png'
+PLAYER_IMG = 'player.png'
 
 #Mob Settings
-MOB_IMG = 'zoimbie1_hold.png'
+MOB_IMG = 'mob.png'
 #MOB_SPEED = 150
 #MOB_HIT_RECT = pg.Rect(0,0, 30, 30)
