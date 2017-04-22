@@ -1,5 +1,5 @@
 WIDTH = 720
-HEIGHT = 720
+HEIGHT = 640
 # WIDTH = 740
 # HEIGHT = 740
 FPS = 60
@@ -13,9 +13,14 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 CYAN = (0, 255, 255)
 MAGENTA = (255, 0, 255)
+GREY = (129, 129, 129)
+
+BAR_LENGTH = 160
+BAR_HEIGHT = 16
 
 # Player settings
 PLAYER_IMG = 'player.png'
+ICON = 'headshot.png'
 
 #Mob Settings
 MOB_IMG = 'mob.png'

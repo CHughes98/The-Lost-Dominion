@@ -49,8 +49,11 @@ class Game:
 	def load_data(self):
 		game_folder = os.path.dirname(__file__)
 		img_folder = os.path.join(game_folder, 'img')
-		#self.map = Map(os.path.join(game_folder, 'map.txt'))
 		self.player_img = pygame.image.load(os.path.join(img_folder, PLAYER_IMG)).convert_alpha()
+
+		self.icon = pygame.image.load(os.path.join(img_folder, ICON)).convert_alpha()
+		self.icon = pygame.transform.scale(self.icon, (64, 64))
+
 		self.mob_img = pygame.image.load(os.path.join(img_folder, MOB_IMG)).convert_alpha()
 
 
@@ -105,6 +108,15 @@ class Game:
 			self.player.moveUp()
 			self.player.pos = self.player.moveUpPos()
 
+	def draw_bar(self, surf, x, y, pct, bar_color):
+	    if pct < 0:
+	        pct = 0
+	    fill = (pct / 100) * settings.BAR_LENGTH
+	    outline_rect = pygame.Rect(x, y, settings.BAR_LENGTH, settings.BAR_HEIGHT)
+	    fill_rect = pygame.Rect(x, y, fill, settings.BAR_HEIGHT)
+	    pygame.draw.rect(surf, bar_color, fill_rect)
+	    pygame.draw.rect(surf, settings.BLACK, outline_rect, 2)
+
 	# def check_for_collisions(self):
 	# 	collisions = pygame.sprite.spritecollide(self.player, self.obstacles, False)
 	# 	if collisions:
@@ -124,11 +136,14 @@ class Game:
 
 	def draw(self):
 		# Game loop - Draw
-		# self.screen.fill(settings.BLACK)
 		self.screen.blit(self.level_base_img, self.level_base_rect)
 		self.screen.blit(self.obstacle_img, self.object_layer_rect)
 		self.all_sprites.draw(self.screen)
 		self.screen.blit(self.level_top_img, self.level_top_rect)
+
+		self.screen.blit(self.icon, (8, settings.HEIGHT - 70))
+		self.draw_bar(self.screen, 73, settings.HEIGHT - 42, self.player.hp, settings.RED)
+		self.draw_bar(self.screen, 73, settings.HEIGHT - 24, self.player.amr, settings.GREY)
 		# *after* drawing everything, flip the display
 		pygame.display.flip()
 

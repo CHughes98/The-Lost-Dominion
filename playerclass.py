@@ -8,9 +8,6 @@ class Player(pygame.sprite.Sprite):
 		self.groups = game.all_sprites
 		pygame.sprite.Sprite.__init__(self, self.groups)
 		self.image = game.player_img
-		# self.image = pygame.Surface((30, 60))
-		# pygame.Surface.fill(self.image, settings.RED)
-		# self.image.set_colorkey(BLACK)
 		self.rect = self.image.get_rect()
 		self.rect.centerx = x_start
 		self.rect.bottom = y_start
@@ -19,14 +16,7 @@ class Player(pygame.sprite.Sprite):
 		self.hp = health
 		self.amr = armor
 		self.multiplier = multiplier
-		#self.speedx = 0
-		#self.speedy = 0
 		self.dmg = 0
-
-	#def update(self):
-		#self.pos = vec(self.rect.centerx, 5 + self.rect.bottom)
-
-
 
 	def moveDown(self):
 		self.rect.bottom += 5
