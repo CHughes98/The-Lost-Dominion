@@ -34,8 +34,14 @@ class Game:
 		self.level_top_img = self.level_top.make_map_top()
 		self.level_top_img.set_colorkey(settings.BLACK)
 		self.level_top_rect = self.level_top_img.get_rect()
+		
+		#Obstacle
+		self.obstacle = Level(path.join(map_folder, 'arena1.tmx'))
+		self.obstacle_img = self.obstacle.make_obstacles()
+		self.obstacle_img.set_colorkey(settings.BLACK)
+		self.object_layer_rect = self.obstacle_img.get_rect()
 
-		pygame.display.set_caption("My Game")
+		pygame.display.set_caption("The Lost Dominion")
 		self.clock = pygame.time.Clock()
 		self.running = True
 		self.load_data()
@@ -81,7 +87,7 @@ class Game:
 				self.running = False
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_SPACE:
-					self.player.strike()
+					self.attack()
 		self.movement()
 
 	def movement(self):
@@ -98,15 +104,35 @@ class Game:
 		if keystate[pygame.K_w] or keystate[pygame.K_UP]:
 			self.player.moveUp()
 			self.player.pos = self.player.moveUpPos()
+			
+	# def check_for_collisions(self):
+	# 	collisions = pygame.sprite.spritecollide(self.player, self.obstacles, False)
+	# 	if collisions:
+	# 		if collisions[0].rect.centerx > self.player.centerx:
+	# 			self.player.centerx = collisions[0].rect.left - self.player.width / 2
+	# 		if collision[0].rect.centerx < self.player.centerx:
+	# 			self.player.centerx = collision[0].rect.right + self.player.width / 2
+	# 			self.player.velocity = 0
+
+	def attack(self):
+		pygame.drawCircle(32)
+		hits = pygame.sprite.spritecollide(self.player, self.mobs, False)
+		if hits:
+			for hit in hits:
+				dmg = player.strike()
+				mob.health -= dmg
 
 	def draw(self):
 		# Game loop - Draw
 		# self.screen.fill(settings.BLACK)
 		self.screen.blit(self.level_base_img, self.level_base_rect)
+		self.screen.blit(self.obstacle_img, self.object_layer_rect)
+		self.obstacles.draw(self.screen)
 		self.all_sprites.draw(self.screen)
 		self.screen.blit(self.level_top_img, self.level_top_rect)
 		# *after* drawing everything, flip the display
 		pygame.display.flip()
+
 
 	def show_start_screen(self):
 		# Game splash/start screen
