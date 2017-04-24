@@ -42,15 +42,9 @@ class Game:
 		map_folder = path.join(path.dirname(__file__), "map")
 
 		#Renders the base of the map(below player)
-		self.level_base = Level(path.join(map_folder, 'arena1.tmx'))
-		self.level_base_img = self.level_base.make_map_base()
-		self.level_base_rect = self.level_base_img.get_rect()
-
-		#Renders the top of the map(above player)
-		self.level_top = Level(path.join(map_folder, 'arena1.tmx'))
-		self.level_top_img = self.level_top.make_map_top()
-		self.level_top_img.set_colorkey(settings.BLACK)
-		self.level_top_rect = self.level_top_img.get_rect()
+		self.map = Level(path.join(map_folder, 'arena1.tmx'))
+		self.map_img = self.map.make_map()
+		self.map_rect = self.map_img.get_rect()
 
 	def movement(self):
 		keystate = pygame.key.get_pressed()
@@ -150,9 +144,8 @@ class Game:
 
 	def draw(self):
 		# Game loop - Draw
-		self.screen.blit(self.level_base_img, self.level_base_rect)
+		self.screen.blit(self.map_img, self.map_rect)
 		self.all_sprites.draw(self.screen)
-		self.screen.blit(self.level_top_img, self.level_top_rect)
 
 		self.screen.blit(self.icon, (8, settings.HEIGHT - 70))
 		self.draw_bar(self.screen, 73, settings.HEIGHT - 42, self.player.hp, settings.RED)

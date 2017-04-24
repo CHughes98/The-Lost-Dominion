@@ -12,13 +12,10 @@ class Level:
         self.width = tm.width * tm.tilewidth
         self.height = tm.height * tm.tileheight
         self.tmxdata = tm
-        self.num = 0
 
-    def render_base(self, surface):
+    def render_map(self, surface):
         ti = self.tmxdata.get_tile_image_by_gid
         for layer in self.tmxdata.visible_layers:
-            self.num += 1
-            if self.num < 9:
                 if isinstance(layer, pytmx.TiledTileLayer):
                     for x, y, gid, in layer:
                         tile = ti(gid)
@@ -26,27 +23,10 @@ class Level:
                             surface.blit(tile, (x * self.tmxdata.tilewidth,
                                                 y * self.tmxdata.tileheight))
 
-    def render_top(self, surface):
-        ti = self.tmxdata.get_tile_image_by_gid
-        for layer in self.tmxdata.visible_layers:
-            self.num += 1
-            if self.num >= 9:
-                if isinstance(layer, pytmx.TiledTileLayer):
-                    for x, y, gid, in layer:
-                        tile = ti(gid)
-                        if tile:
-                            surface.blit(tile, (x * self.tmxdata.tilewidth,
-                                                y * self.tmxdata.tileheight))
-
-    def make_map_base(self):
-        map_base = pygame.Surface((self.width, self.height))
-        self.render_base(map_base)
-        return map_base
-
-    def make_map_top(self):
-        map_top = pygame.Surface((self.width, self.height))
-        self.render_top(map_top)
-        return map_top
+    def make_map(self):
+        self.map = pygame.Surface((self.width, self.height))
+        self.render_map(self.map)
+        return self.map
 
     def roll_stats(self, player):
         end_of_wave_roll = random.choice(1, 3)
