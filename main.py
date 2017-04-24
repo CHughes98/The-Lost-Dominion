@@ -8,6 +8,7 @@ from mobclass import *
 from levelclass import *
 from os import *
 import os
+import makestats
 
 def draw_text(surf, text, size, x, y):
 	font = pygame.font.Font(font_name, size)
@@ -109,7 +110,7 @@ class Game:
 		self.all_sprites.add(self.player)
 
 		self.mobs = pygame.sprite.Group()
-		self.mob = Mob(self, 43, 14, 10, 1)
+		self.mob = Mob(self, 43, 14, makestats.makeHealth(1), makestats.makeStrength(1))
 		self.all_sprites.add(self.mob)
 		self.mobs.add(self.mob)
 
