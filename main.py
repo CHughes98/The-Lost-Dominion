@@ -86,6 +86,8 @@ class Game:
 		if hits:
 			for hit in hits:
 				self.player.hp -= self.mob.attackStrength
+				if self.player.hp <= 0:
+					self.player.kill()
 
 	def set_boundaries(self):
 		if self.player.rect.right >= 43 * TILESIZE:
@@ -94,8 +96,8 @@ class Game:
 			self.player.rect.left = 8 * TILESIZE
 		if self.player.rect.bottom >= 23 * TILESIZE:
 			self.player.rect.bottom = 23 * TILESIZE
-		if self.player.rect.top <= 4 * TILESIZE:
-			self.player.rect.top = 4 * TILESIZE
+		if self.player.rect.top <= 6 * TILESIZE:
+			self.player.rect.top = 6 * TILESIZE
 
 	def new(self):
         # Start a New Game
