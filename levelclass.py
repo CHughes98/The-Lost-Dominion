@@ -7,6 +7,8 @@ from os import path
 class Level:
     def __init__(self, mapfile):
         tm = pytmx.load_pygame(mapfile, pixelaplha = True)
+        pygame.sprite.Sprite.__init__(self)
+        self.obstacle_group = pygame.sprite.Group()
         self.width = tm.width * tm.tilewidth
         self.height = tm.height * tm.tileheight
         self.tmxdata = tm
@@ -28,34 +30,18 @@ class Level:
         ti = self.tmxdata.get_tile_image_by_gid
         for layer in self.tmxdata.visible_layers:
             self.num += 1
-            if self.num > 9:
+            if self.num >= 9:
                 if isinstance(layer, pytmx.TiledTileLayer):
                     for x, y, gid, in layer:
                         tile = ti(gid)
                         if tile:
                             surface.blit(tile, (x * self.tmxdata.tilewidth,
                                                 y * self.tmxdata.tileheight))
-    def object_layer(self, surface):
-        ti = self.tmxdata.get_tile_image_by_gid
-        for layer in self.tmxdata.visible_layers:
-            self.num += 1
-            if self.num == 9:
-                if isinstance(layer, pytmx.TiledTileLayer):
-                    for x, y, gid in layer:
-                        tile = ti(gid)
-                        if tile:
-                            surface.blit(tile, (x * self.tmxdata.tilewidth, y * self.tmxdata.tileheight))
-                            # print(x, y, gid)
 
     def make_map_base(self):
         map_base = pygame.Surface((self.width, self.height))
         self.render_base(map_base)
         return map_base
-
-    def make_obstacles(self):
-        map_obst = pygame.Surface((self.width, self.height))
-        self.object_layer(map_obst)
-        return map_obst
 
     def make_map_top(self):
         map_top = pygame.Surface((self.width, self.height))

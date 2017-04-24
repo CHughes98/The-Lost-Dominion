@@ -21,25 +21,7 @@ class Game:
 		# Initialize game window
 		pygame.init()
 		pygame.mixer.init()
-		self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
-		map_folder = path.join(path.dirname(__file__), "map")
-
-		#Renders the base of the map(below player)
-		self.level_base = Level(path.join(map_folder, 'arena1.tmx'))
-		self.level_base_img = self.level_base.make_map_base()
-		self.level_base_rect = self.level_base_img.get_rect()
-
-		#Renders the top of the map(above player)
-		self.level_top = Level(path.join(map_folder, 'arena1.tmx'))
-		self.level_top_img = self.level_top.make_map_top()
-		self.level_top_img.set_colorkey(settings.BLACK)
-		self.level_top_rect = self.level_top_img.get_rect()
-
-		#Obstacle
-		self.obstacle = Level(path.join(map_folder, 'arena1.tmx'))
-		self.obstacle_img = self.obstacle.make_obstacles()
-		self.obstacle_img.set_colorkey(settings.BLACK)
-		self.object_layer_rect = self.obstacle_img.get_rect()
+		self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT), pygame.FULLSCREEN)
 
 		pygame.display.set_caption("The Lost Dominion")
 		self.clock = pygame.time.Clock()
@@ -56,42 +38,18 @@ class Game:
 
 		self.mob_img = pygame.image.load(os.path.join(img_folder, MOB_IMG)).convert_alpha()
 
+		map_folder = path.join(path.dirname(__file__), "map")
 
-	def new(self):
-        # Start a New Game
-		self.all_sprites = pygame.sprite.Group()
-		self.player = Player(self, settings.WIDTH / 2, settings.HEIGHT / 2)
-		self.all_sprites.add(self.player)
-		self.mobs = pygame.sprite.Group()
-		self.mob = Mob(self, settings.WIDTH / 4, settings.HEIGHT / 4, 10, 1)
-		self.all_sprites.add(self.mob)
-		self.run()
+		#Renders the base of the map(below player)
+		self.level_base = Level(path.join(map_folder, 'arena1.tmx'))
+		self.level_base_img = self.level_base.make_map_base()
+		self.level_base_rect = self.level_base_img.get_rect()
 
-
-	def run(self):
-		# Game loop
-		self.playing = True
-		while self.playing:
-			self.dt = self.clock.tick(settings.FPS)/1000#For seconds
-			self.events()
-			self.update()
-			self.draw()
-
-	def update(self):
-		# Game loop - Update
-		self.all_sprites.update()
-
-	def events(self):
-		# Game loop - Events
-		for event in pygame.event.get():
-			# Check for closing the window
-			if event.type == pygame.QUIT:
-				self.playing = False
-				self.running = False
-			elif event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_SPACE:
-					self.attack()
-		self.movement()
+		#Renders the top of the map(above player)
+		self.level_top = Level(path.join(map_folder, 'arena1.tmx'))
+		self.level_top_img = self.level_top.make_map_top()
+		self.level_top_img.set_colorkey(settings.BLACK)
+		self.level_top_rect = self.level_top_img.get_rect()
 
 	def movement(self):
 		keystate = pygame.key.get_pressed()
@@ -117,27 +75,81 @@ class Game:
 	    pygame.draw.rect(surf, bar_color, fill_rect)
 	    pygame.draw.rect(surf, settings.BLACK, outline_rect, 2)
 
-	# def check_for_collisions(self):
-	# 	collisions = pygame.sprite.spritecollide(self.player, self.obstacles, False)
-	# 	if collisions:
-	# 		if collisions[0].rect.centerx > self.player.centerx:
-	# 			self.player.centerx = collisions[0].rect.left - self.player.width / 2
-	# 		if collision[0].rect.centerx < self.player.centerx:
-	# 			self.player.centerx = collision[0].rect.right + self.player.width / 2
-	# 			self.player.velocity = 0
-
 	def attack(self):
-		pygame.drawCircle(32)
+		#pygame.drawCircle(32)
 		hits = pygame.sprite.spritecollide(self.player, self.mobs, False)
 		if hits:
 			for hit in hits:
-				dmg = player.strike()
-				mob.health -= dmg
+				self.player.strike()
+				self.mob.hp -= self.player.dmg
+				print(self.mob.hp)
+		if self.mob.hp < 0:
+			self.mob.kill()
+
+	def get_hit(self):
+		hits = pygame.sprite.spritecollide(self.player, self.mobs, False)
+		if hits:
+			for hit in hits:
+				self.player.hp -= 5
+
+	def set_boundaries(self):
+		if self.player.rect.right >= 43 * TILESIZE:
+			self.player.rect.right = 43 * TILESIZE
+		if self.player.rect.left <= 8 * TILESIZE:
+			self.player.rect.left = 8 * TILESIZE
+		if self.player.rect.bottom >= 23 * TILESIZE:
+			self.player.rect.bottom = 23 * TILESIZE
+		if self.player.rect.top <= 4 * TILESIZE:
+			self.player.rect.top = 4 * TILESIZE
+
+	def new(self):
+        # Start a New Game
+		self.all_sprites = pygame.sprite.Group()
+		self.player = Player(self, 9, 17)
+		self.all_sprites.add(self.player)
+
+		self.mobs = pygame.sprite.Group()
+		self.mob = Mob(self, 43, 14, 10, 1)
+		self.all_sprites.add(self.mob)
+		self.mobs.add(self.mob)
+
+		self.run()
+
+	def run(self):
+		# Game loop
+		self.playing = True
+		while self.playing:
+			self.dt = self.clock.tick(settings.FPS)/1000#For seconds
+			self.events()
+			self.update()
+			self.draw()
+
+
+	def events(self):
+		# Game loop - Events
+		for event in pygame.event.get():
+			# Check for closing the window
+			if event.type == pygame.QUIT:
+				self.playing = False
+				self.running = False
+			elif event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_SPACE:
+					self.attack()
+				if event.key == pygame.K_ESCAPE:
+					self.playing = False
+					self.running = False
+
+		self.movement()
+		self.set_boundaries()
+		self.get_hit()
+
+	def update(self):
+		# Game loop - Update
+		self.all_sprites.update()
 
 	def draw(self):
 		# Game loop - Draw
 		self.screen.blit(self.level_base_img, self.level_base_rect)
-		self.screen.blit(self.obstacle_img, self.object_layer_rect)
 		self.all_sprites.draw(self.screen)
 		self.screen.blit(self.level_top_img, self.level_top_rect)
 

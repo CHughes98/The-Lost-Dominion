@@ -9,8 +9,8 @@ class Player(pygame.sprite.Sprite):
 		pygame.sprite.Sprite.__init__(self, self.groups)
 		self.image = game.player_img
 		self.rect = self.image.get_rect()
-		self.rect.centerx = x_start
-		self.rect.bottom = y_start
+		self.rect.centerx = x_start * settings.TILESIZE
+		self.rect.bottom = y_start * settings.TILESIZE
 		self.vel = vec(0,0)
 		self.pos = vec(self.rect.centerx, self.rect.bottom)
 		self.hp = health
@@ -42,3 +42,7 @@ class Player(pygame.sprite.Sprite):
 	def moveLeftPos(self):
 		#self.rect.centerx -= 5
 		return vec(self.rect.centerx -5, self.rect.bottom)
+
+	def strike(self):
+		roll = random.randrange(1, 7)
+		self.dmg = roll * self.multiplier

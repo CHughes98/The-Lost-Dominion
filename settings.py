@@ -1,7 +1,5 @@
-WIDTH = 720
-HEIGHT = 640
-# WIDTH = 740
-# HEIGHT = 740
+WIDTH = 1600
+HEIGHT = 900
 FPS = 60
 
 # define colors
@@ -17,6 +15,8 @@ GREY = (129, 129, 129)
 
 BAR_LENGTH = 160
 BAR_HEIGHT = 16
+
+TILESIZE = 32
 
 # Player settings
 PLAYER_IMG = 'player.png'

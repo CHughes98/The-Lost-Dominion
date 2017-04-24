@@ -16,8 +16,8 @@ class Mob(pygame.sprite.Sprite):
 		#pygame.Surface.fill(self.image, settings.BLUE)
 		# self.image.set_colorkey(BLACK)
 		self.rect = self.image.get_rect()
-		self.rect.centerx = x_start
-		self.rect.bottom = y_start
+		self.rect.centerx = x_start * settings.TILESIZE
+		self.rect.bottom = y_start * settings.TILESIZE
 		self.pos = vec(self.rect.centerx, self.rect.bottom)
 		self.vel = vec(0,0)
 		self.acc = vec(0,0)
@@ -52,8 +52,8 @@ class Mob(pygame.sprite.Sprite):
 		realMovement = pygame.math.Vector2.normalize(movement)
 		realMovement *= self.speed
 		realMovement += enemy'''
-		
-		
+
+
 	def update(self):
 		self.rot = (self.game.player.pos - self.pos).angle_to(vec(1,0))
 		self.image = pygame.transform.rotate(self.game.mob_img, self.rot)
@@ -68,13 +68,3 @@ class Mob(pygame.sprite.Sprite):
 		self.hit_rect.centery = self.pos.y
 		collide_with_walls(self, self.game.walls, 'y')
 		self.rect.center = self.hit_rect.center'''
-
-
-
-
-
-
-
-
-
-
