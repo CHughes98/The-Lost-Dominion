@@ -1,5 +1,3 @@
-import mobclass
-
 def makeHealth(wave):
 	healthbase = 9
 	health = healthbase + (float(wave))**1.20
