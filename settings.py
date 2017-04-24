@@ -24,5 +24,6 @@ ICON = 'headshot.png'
 
 #Mob Settings
 MOB_IMG = 'mob.png'
+MOB_ICON = 'mobheadshot.png'
 #MOB_SPEED = 150
 #MOB_HIT_RECT = pg.Rect(0,0, 30, 30)
