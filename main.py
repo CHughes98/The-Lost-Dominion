@@ -33,7 +33,7 @@ class Game:
 		self.player_img = pygame.image.load(os.path.join(img_folder, PLAYER_IMG)).convert_alpha()
 
 		self.icon = pygame.image.load(os.path.join(img_folder, ICON)).convert_alpha()
-		self.icon = pygame.transform.scale(self.icon, (64, 64))
+		self.icon = pygame.transform.scale(self.icon, (128, 128))
 
 		self.mob_img = pygame.image.load(os.path.join(img_folder, MOB_IMG)).convert_alpha()
 
@@ -170,17 +170,17 @@ class Game:
 		self.screen.blit(self.map_img, self.map_rect)
 		self.all_sprites.draw(self.screen)
 
-		self.screen.blit(self.icon, (8, settings.HEIGHT - 70))
+		self.screen.blit(self.icon, (8, settings.HEIGHT - 132))
 		self.draw_enemies(self.screen, settings.WIDTH - 100, 32, self.mob_icon)
-		self.draw_bar(self.screen, 73, settings.HEIGHT - 42, self.player.hp, settings.RED)
-		self.draw_bar(self.screen, 73, settings.HEIGHT - 24, self.player.amr, settings.GREY)
+		self.draw_bar(self.screen, 136, settings.HEIGHT - 70, self.player.hp, settings.RED)
+		self.draw_bar(self.screen, 136, settings.HEIGHT - 38, self.player.amr, settings.GREY)
 		# *after* drawing everything, flip the display
 		pygame.display.flip()
 
 
 	def show_start_screen(self):
 		self.screen.blit(self.map_img, self.map_rect)
-		self.draw_text(self.screen, "Press the Spacebar to begin!", 36, 548, 512, settings.BLACK)
+		self.draw_text(self.screen, "Press any key to begin!", 36, 648, 512, settings.BLACK)
 		self.screen.blit(self.logo, (240, 64))
 		pygame.display.flip()
 		self.waiting = True
@@ -190,11 +190,11 @@ class Game:
 				if event.type == pygame.QUIT:
 					exit()
 				if event.type == pygame.KEYUP:
-					if event.key == pygame.K_SPACE:
+					if event.key == pygame.K_ESCAPE:
+						exit()
+					else:
 						self.waiting = False
 						self.running = True
-					elif event.key == pygame.K_ESCAPE:
-						exit()
 
 	def show_go_screen(self):
 		# Game over/continue
