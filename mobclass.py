@@ -26,7 +26,7 @@ class Mob(pygame.sprite.Sprite):
 		#self.speedx = 0
 		#self.speedy = 0
 		self.speed = 10
-		self.attackStrength = 0
+		self.attackStrength = attackStrength
 		self.rot = 0
 
 

@@ -84,14 +84,14 @@ class Game:
 				self.player.strike()
 				self.mob.hp -= self.player.dmg
 				print(self.mob.hp)
-		if self.mob.hp < 0:
+		if self.mob.hp <= 0:
 			self.mob.kill()
 
 	def get_hit(self):
 		hits = pygame.sprite.spritecollide(self.player, self.mobs, False)
 		if hits:
 			for hit in hits:
-				self.player.hp -= 5
+				self.player.hp -= self.mob.attackStrength
 
 	def set_boundaries(self):
 		if self.player.rect.right >= 43 * TILESIZE:
@@ -106,7 +106,7 @@ class Game:
 	def new(self):
         # Start a New Game
 		self.all_sprites = pygame.sprite.Group()
-		self.player = Player(self, 9, 17)
+		self.player = Player(self, 9, 17,100,0)
 		self.all_sprites.add(self.player)
 
 		self.mobs = pygame.sprite.Group()

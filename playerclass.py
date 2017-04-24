@@ -4,7 +4,7 @@ import settings
 vec = pygame.math.Vector2
 
 class Player(pygame.sprite.Sprite):
-	def __init__(self, game, x_start, y_start, health = 100, armor = 0, multiplier = 1):
+	def __init__(self, game, x_start, y_start, health, armor, multiplier = 1):
 		self.groups = game.all_sprites
 		pygame.sprite.Sprite.__init__(self, self.groups)
 		self.image = game.player_img
