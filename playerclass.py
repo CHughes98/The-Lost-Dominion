@@ -19,29 +19,29 @@ class Player(pygame.sprite.Sprite):
 		self.dmg = 0
 
 	def moveDown(self):
-		self.rect.bottom += 5
+		self.rect.bottom += 1
 		#self.pos = vec(self.rect.centerx, 5 + self.rect.bottom)
 	def moveUp(self):
-		self.rect.bottom -= 5
+		self.rect.bottom -= 1
 		#self.pos = vec(self.rect.centerx, self.rect.bottom - 5)
 	def moveRight(self):
-		self.rect.centerx += 5
+		self.rect.centerx += 1
 		#self.pos = vec(self.rect.centerx + 5, self.rect.bottom)
 	def moveLeft(self):
-		self.rect.centerx -= 5
+		self.rect.centerx -= 1
 		#self.pos = vec(self.rect.centerx -5, self.rect.bottom)
 	def moveDownPos(self):
 		#self.rect.bottom += 5
-		return vec(self.rect.centerx, 5 + self.rect.bottom)
+		return vec(self.rect.centerx, 1 + self.rect.bottom)
 	def moveUpPos(self):
 		#self.rect.bottom -= 5
-		return vec(self.rect.centerx, self.rect.bottom - 5)
+		return vec(self.rect.centerx, self.rect.bottom - 1)
 	def moveRightPos(self):
 		#self.rect.centerx += 5
-		return vec(self.rect.centerx + 5, self.rect.bottom)
+		return vec(self.rect.centerx + 1, self.rect.bottom)
 	def moveLeftPos(self):
 		#self.rect.centerx -= 5
-		return vec(self.rect.centerx -5, self.rect.bottom)
+		return vec(self.rect.centerx -1, self.rect.bottom)
 
 	def strike(self):
 		roll = random.randrange(1, 7)
