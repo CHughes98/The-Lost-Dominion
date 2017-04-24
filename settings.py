@@ -1,5 +1,5 @@
-WIDTH = 1600
-HEIGHT = 900
+WIDTH = 1280
+HEIGHT = 720
 FPS = 60
 
 # define colors
@@ -16,11 +16,13 @@ GREY = (129, 129, 129)
 BAR_LENGTH = 160
 BAR_HEIGHT = 16
 
-TILESIZE = 32
+TILESIZE = 24
 
 # Player settings
 PLAYER_IMG = 'player.png'
 ICON = 'headshot.png'
+
+LOGO_IMG = 'logo.png'
 
 #Mob Settings
 MOB_IMG = 'mob.png'

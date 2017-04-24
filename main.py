@@ -10,28 +10,26 @@ from os import *
 import os
 import makestats
 
-def draw_text(surf, text, size, x, y):
-	font = pygame.font.Font(font_name, size)
-	text_surface = font.render(text, True, WHITE)
-	text_rect = text_surface.get_rect()
-	text_rect.midtop = (x, y)
-	surf.blit(text_surface, text_rect)
-
 class Game:
 	def __init__(self):
 		# Initialize game window
 		pygame.init()
 		pygame.mixer.init()
-		self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT), pygame.FULLSCREEN)
+		self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
 
 		pygame.display.set_caption("The Lost Dominion")
 		self.clock = pygame.time.Clock()
-		self.running = True
 		self.load_data()
 
 	def load_data(self):
 		game_folder = os.path.dirname(__file__)
 		img_folder = os.path.join(game_folder, 'img')
+
+		self.font_name = pygame.font.match_font("algerian")
+
+		self.logo = pygame.image.load(os.path.join(img_folder, LOGO_IMG)).convert_alpha()
+		self.logo = pygame.transform.scale2x(self.logo)
+
 		self.player_img = pygame.image.load(os.path.join(img_folder, PLAYER_IMG)).convert_alpha()
 
 		self.icon = pygame.image.load(os.path.join(img_folder, ICON)).convert_alpha()
@@ -39,12 +37,17 @@ class Game:
 
 		self.mob_img = pygame.image.load(os.path.join(img_folder, MOB_IMG)).convert_alpha()
 
+		self.mob_icon = pygame.image.load(os.path.join(img_folder, MOB_ICON)).convert_alpha()
+		self.mob_icon = pygame.transform.scale(self.mob_icon, (32, 32))
+
 		map_folder = path.join(path.dirname(__file__), "map")
 
-		#Renders the base of the map(below player)
+		#Renders the map
 		self.map = Level(path.join(map_folder, 'arena1.tmx'))
 		self.map_img = self.map.make_map()
+		self.map_img = pygame.transform.scale(self.map_img, (settings.WIDTH, settings.HEIGHT))
 		self.map_rect = self.map_img.get_rect()
+
 
 	def movement(self):
 		keystate = pygame.key.get_pressed()
@@ -70,16 +73,24 @@ class Game:
 	    pygame.draw.rect(surf, bar_color, fill_rect)
 	    pygame.draw.rect(surf, settings.BLACK, outline_rect, 2)
 
+	def draw_text(self, surf, text, size, x, y, color):
+		font = pygame.font.Font(self.font_name, size)
+		text_surface = font.render(text, True, color)
+		text_rect = text_surface.get_rect()
+		text_rect.midtop = (x, y)
+		surf.blit(text_surface, text_rect)
+
 	def attack(self):
 		#pygame.drawCircle(32)
 		hits = pygame.sprite.spritecollide(self.player, self.mobs, False)
 		if hits:
 			for hit in hits:
 				self.player.strike()
-				self.mob.hp -= self.player.dmg
-				print(self.mob.hp)
-		if self.mob.hp <= 0:
-			self.mob.kill()
+				hit.hp -= self.player.dmg
+				print(hit.hp)
+				if hit.hp <= 0:
+					hit.kill()
+					self.mob_amt -= 1
 
 	def get_hit(self):
 		hits = pygame.sprite.spritecollide(self.player, self.mobs, False)
@@ -90,37 +101,47 @@ class Game:
 					self.player.kill()
 
 	def set_boundaries(self):
-		if self.player.rect.right >= 43 * TILESIZE:
-			self.player.rect.right = 43 * TILESIZE
+		if self.player.rect.right >= 46 * TILESIZE:
+			self.player.rect.right = 46 * TILESIZE
 		if self.player.rect.left <= 8 * TILESIZE:
 			self.player.rect.left = 8 * TILESIZE
-		if self.player.rect.bottom >= 23 * TILESIZE:
-			self.player.rect.bottom = 23 * TILESIZE
+		if self.player.rect.bottom >= 24 * TILESIZE:
+			self.player.rect.bottom = 24 * TILESIZE
 		if self.player.rect.top <= 6 * TILESIZE:
 			self.player.rect.top = 6 * TILESIZE
+
+	def draw_enemies(self, surf, x, y, img):
+	    for i in range(self.mob_amt):
+	        img_rect = img.get_rect()
+	        img_rect.x = x
+	        img_rect.y = y + 32 * i + 1
+	        surf.blit(img, img_rect)
+
+	def create_enemies(self, x, y):
+		self.mob = Mob(self, x, y, makestats.makeHealth(1), makestats.makeStrength(1))
+		self.all_sprites.add(self.mob)
+		self.mobs.add(self.mob)
 
 	def new(self):
         # Start a New Game
 		self.all_sprites = pygame.sprite.Group()
 		self.player = Player(self, 9, 17,100,0)
 		self.all_sprites.add(self.player)
-
 		self.mobs = pygame.sprite.Group()
-		self.mob = Mob(self, 43, 14, makestats.makeHealth(1), makestats.makeStrength(1))
-		self.all_sprites.add(self.mob)
-		self.mobs.add(self.mob)
+		self.mob_amt = 3
 
-		self.run()
+		for i in range(self.mob_amt):
+			self.create_enemies(43 + i * 2, 14 + i * 2)
 
 	def run(self):
 		# Game loop
 		self.playing = True
+		self.new()
 		while self.playing:
 			self.dt = self.clock.tick(settings.FPS)/1000#For seconds
 			self.events()
 			self.update()
 			self.draw()
-
 
 	def events(self):
 		# Game loop - Events
@@ -150,6 +171,7 @@ class Game:
 		self.all_sprites.draw(self.screen)
 
 		self.screen.blit(self.icon, (8, settings.HEIGHT - 70))
+		self.draw_enemies(self.screen, settings.WIDTH - 100, 32, self.mob_icon)
 		self.draw_bar(self.screen, 73, settings.HEIGHT - 42, self.player.hp, settings.RED)
 		self.draw_bar(self.screen, 73, settings.HEIGHT - 24, self.player.amr, settings.GREY)
 		# *after* drawing everything, flip the display
@@ -157,8 +179,22 @@ class Game:
 
 
 	def show_start_screen(self):
-		# Game splash/start screen
-		pass
+		self.screen.blit(self.map_img, self.map_rect)
+		self.draw_text(self.screen, "Press the Spacebar to begin!", 36, 548, 512, settings.BLACK)
+		self.screen.blit(self.logo, (240, 64))
+		pygame.display.flip()
+		self.waiting = True
+		while self.waiting:
+			self.clock.tick(FPS)
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					exit()
+				if event.type == pygame.KEYUP:
+					if event.key == pygame.K_SPACE:
+						self.waiting = False
+						self.running = True
+					elif event.key == pygame.K_ESCAPE:
+						exit()
 
 	def show_go_screen(self):
 		# Game over/continue
@@ -168,7 +204,7 @@ def main():
 	g = Game()
 	g.show_start_screen()
 	while g.running:
-		g.new()
+		g.run()
 		g.show_go_screen()
 
 main()
