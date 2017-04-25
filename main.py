@@ -124,20 +124,20 @@ class Game:
 	def new(self):
         # Start a New Game
 		self.all_sprites = pygame.sprite.Group()
-		self.player = Player(self, 9, 17,100,0)
+		self.player = Player(self, 9, 17, 100, 0)
 		self.all_sprites.add(self.player)
 		self.mobs = pygame.sprite.Group()
-		self.mob_amt = 9
+		self.mob_amt = 13
 
 		for i in range(self.mob_amt):
-			self.create_enemies(43 + i * 2, 14 + i * 2)
+			self.create_enemies(44, 6 + (i * 1.5))
 
 	def run(self):
 		# Game loop
 		self.playing = True
 		self.new()
 		while self.playing:
-			self.dt = self.clock.tick(FPS)/1000#For seconds
+			self.dt = self.clock.tick(FPS)/1000 #For seconds
 			self.events()
 			self.update()
 			self.draw()
