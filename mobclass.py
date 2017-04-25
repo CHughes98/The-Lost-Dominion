@@ -67,4 +67,4 @@ class Mob(pygame.sprite.Sprite):
 		collide_with_walls(self, self.game.walls, 'x')
 		self.hit_rect.centery = self.pos.y
 		collide_with_walls(self, self.game.walls, 'y')
-		self.rect.center = self.hit_rect.center'''
+		self.rect.center = self.hit_rect.center''' '' ''
