@@ -9,7 +9,6 @@ from levelclass import *
 from os import *
 import os
 import makestats
-import highscore
 
 class Game:
 	def __init__(self):
@@ -81,8 +80,8 @@ class Game:
 		surf.blit(text_surface, text_rect)
 
 	def attack(self):
-		#pygame.drawCircle(32)
-		hits = pygame.sprite.spritecollide(self.player, self.mobs, False)
+		attack_radius = Hitbox(self, self.player.rect.centerx, self.player.rect.bottom)
+		hits = pygame.sprite.spritecollide(attack_radius, self.mobs, False)
 		if hits:
 			for hit in hits:
 				self.player.strike()
