@@ -38,7 +38,7 @@ class Game:
 		self.mob_img = pygame.image.load(os.path.join(img_folder, MOB_IMG)).convert_alpha()
 
 		self.mob_icon = pygame.image.load(os.path.join(img_folder, MOB_ICON)).convert_alpha()
-		self.mob_icon = pygame.transform.scale(self.mob_icon, (32, 32))
+		self.mob_icon = pygame.transform.scale(self.mob_icon, (64, 64))
 
 		map_folder = path.join(path.dirname(__file__), "map")
 
@@ -112,7 +112,7 @@ class Game:
 	def draw_enemies(self, surf, x, y, img):
 	    for i in range(self.mob_amt):
 	        img_rect = img.get_rect()
-	        img_rect.x = x + (48 * i)
+	        img_rect.x = x + (72 * i)
 	        img_rect.y = y
 	        surf.blit(img, img_rect)
 
@@ -127,7 +127,7 @@ class Game:
 		self.player = Player(self, 9, 17, 100, 0)
 		self.all_sprites.add(self.player)
 		self.mobs = pygame.sprite.Group()
-		self.mob_amt = 13
+		self.mob_amt = 7
 
 		for i in range(self.mob_amt):
 			self.create_enemies(44, 6 + (i * 1.5))
@@ -170,7 +170,7 @@ class Game:
 		self.all_sprites.draw(self.screen)
 
 		self.screen.blit(self.icon, (8, HEIGHT - 132))
-		self.draw_enemies(self.screen, 152, HEIGHT - 106, self.mob_icon)
+		self.draw_enemies(self.screen, 152, HEIGHT - 132, self.mob_icon)
 		self.draw_bar(self.screen, 136, HEIGHT - 70, self.player.hp, RED)
 		self.draw_bar(self.screen, 136, HEIGHT - 38, self.player.amr, GREY)
 		# *after* drawing everything, flip the display
