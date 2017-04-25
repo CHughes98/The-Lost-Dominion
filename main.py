@@ -196,7 +196,7 @@ class Game:
 
 						self.waiting = False
 						self.running = True
-
+	
 	def show_go_screen(self):
 		# Game over/continue
 		pass
