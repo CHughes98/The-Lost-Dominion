@@ -15,7 +15,7 @@ class Game:
 		# Initialize game window
 		pygame.init()
 		pygame.mixer.init()
-		self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
+		self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 		pygame.display.set_caption("The Lost Dominion")
 		self.clock = pygame.time.Clock()
@@ -45,9 +45,8 @@ class Game:
 		#Renders the map
 		self.map = Level(path.join(map_folder, 'arena1.tmx'))
 		self.map_img = self.map.make_map()
-		self.map_img = pygame.transform.scale(self.map_img, (settings.WIDTH, settings.HEIGHT))
+		self.map_img = pygame.transform.scale(self.map_img, (WIDTH, HEIGHT))
 		self.map_rect = self.map_img.get_rect()
-
 
 	def movement(self):
 		keystate = pygame.key.get_pressed()
@@ -67,11 +66,11 @@ class Game:
 	def draw_bar(self, surf, x, y, pct, bar_color):
 	    if pct < 0:
 	        pct = 0
-	    fill = (pct / 100) * settings.BAR_LENGTH
-	    outline_rect = pygame.Rect(x, y, settings.BAR_LENGTH, settings.BAR_HEIGHT)
-	    fill_rect = pygame.Rect(x, y, fill, settings.BAR_HEIGHT)
+	    fill = (pct / 100) * BAR_LENGTH
+	    outline_rect = pygame.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
+	    fill_rect = pygame.Rect(x, y, fill, BAR_HEIGHT)
 	    pygame.draw.rect(surf, bar_color, fill_rect)
-	    pygame.draw.rect(surf, settings.BLACK, outline_rect, 2)
+	    pygame.draw.rect(surf, BLACK, outline_rect, 2)
 
 	def draw_text(self, surf, text, size, x, y, color):
 		font = pygame.font.Font(self.font_name, size)
@@ -113,8 +112,8 @@ class Game:
 	def draw_enemies(self, surf, x, y, img):
 	    for i in range(self.mob_amt):
 	        img_rect = img.get_rect()
-	        img_rect.x = x
-	        img_rect.y = y + 32 * i + 1
+	        img_rect.x = x + (48 * i)
+	        img_rect.y = y
 	        surf.blit(img, img_rect)
 
 	def create_enemies(self, x, y):
@@ -125,20 +124,20 @@ class Game:
 	def new(self):
         # Start a New Game
 		self.all_sprites = pygame.sprite.Group()
-		self.player = Player(self, 9, 17,100,0)
+		self.player = Player(self, 9, 17, 100, 0)
 		self.all_sprites.add(self.player)
 		self.mobs = pygame.sprite.Group()
-		self.mob_amt = 3
+		self.mob_amt = 13
 
 		for i in range(self.mob_amt):
-			self.create_enemies(43 + i * 2, 14 + i * 2)
+			self.create_enemies(44, 6 + (i * 1.5))
 
 	def run(self):
 		# Game loop
 		self.playing = True
 		self.new()
 		while self.playing:
-			self.dt = self.clock.tick(settings.FPS)/1000#For seconds
+			self.dt = self.clock.tick(FPS)/1000 #For seconds
 			self.events()
 			self.update()
 			self.draw()
@@ -170,17 +169,16 @@ class Game:
 		self.screen.blit(self.map_img, self.map_rect)
 		self.all_sprites.draw(self.screen)
 
-		self.screen.blit(self.icon, (8, settings.HEIGHT - 132))
-		self.draw_enemies(self.screen, settings.WIDTH - 100, 32, self.mob_icon)
-		self.draw_bar(self.screen, 136, settings.HEIGHT - 70, self.player.hp, settings.RED)
-		self.draw_bar(self.screen, 136, settings.HEIGHT - 38, self.player.amr, settings.GREY)
+		self.screen.blit(self.icon, (8, HEIGHT - 132))
+		self.draw_enemies(self.screen, 152, HEIGHT - 106, self.mob_icon)
+		self.draw_bar(self.screen, 136, HEIGHT - 70, self.player.hp, RED)
+		self.draw_bar(self.screen, 136, HEIGHT - 38, self.player.amr, GREY)
 		# *after* drawing everything, flip the display
 		pygame.display.flip()
 
-
 	def show_start_screen(self):
 		self.screen.blit(self.map_img, self.map_rect)
-		self.draw_text(self.screen, "Press any key to begin!", 36, 648, 512, settings.BLACK)
+		self.draw_text(self.screen, "Press any key to begin!", 36, 648, 512, BLACK)
 		self.screen.blit(self.logo, (240, 64))
 		pygame.display.flip()
 		self.waiting = True
@@ -193,9 +191,13 @@ class Game:
 					if event.key == pygame.K_ESCAPE:
 						exit()
 					else:
-
 						pygame.mixer.music.load(os.path.join(path.dirname(__file__), "snd", "song1.wav"))
+<<<<<<< HEAD
 						pygame.mixer.music.play(loops = -1)
+=======
+						pygame.mixer.music.play()
+						pygame.mixer.music.play(loops=-1)
+>>>>>>> 521e9ff54559c92169097f40df7a2037f90f2e1d
 						self.waiting = False
 						self.running = True
 
