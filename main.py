@@ -9,6 +9,7 @@ from levelclass import *
 from os import *
 import os
 import makestats
+import highscore
 
 class Game:
 	def __init__(self):
@@ -192,8 +193,8 @@ class Game:
 						exit()
 					else:
 						pygame.mixer.music.load(os.path.join(path.dirname(__file__), "snd", "song1.wav"))
-						pygame.mixer.music.play()
-						pygame.mixer.music.play(loops=-1)
+						pygame.mixer.music.play(loops = -1)
+
 						self.waiting = False
 						self.running = True
 
