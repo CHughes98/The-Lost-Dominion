@@ -48,7 +48,6 @@ class Game:
 		self.map_img = pygame.transform.scale(self.map_img, (settings.WIDTH, settings.HEIGHT))
 		self.map_rect = self.map_img.get_rect()
 
-
 	def movement(self):
 		keystate = pygame.key.get_pressed()
 		if keystate[pygame.K_d] or keystate[pygame.K_RIGHT]:
@@ -176,7 +175,6 @@ class Game:
 		self.draw_bar(self.screen, 136, settings.HEIGHT - 38, self.player.amr, settings.GREY)
 		# *after* drawing everything, flip the display
 		pygame.display.flip()
-
 
 	def show_start_screen(self):
 		self.screen.blit(self.map_img, self.map_rect)
