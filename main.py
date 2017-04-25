@@ -9,6 +9,7 @@ from levelclass import *
 from os import *
 import os
 import makestats
+import highscore
 
 class Game:
 	def __init__(self):
