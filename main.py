@@ -191,6 +191,9 @@ class Game:
 					if event.key == pygame.K_ESCAPE:
 						exit()
 					else:
+
+						pygame.mixer.music.load(os.path.join(path.dirname(__file__), "snd", "song1.wav"))
+						pygame.mixer.music.play()
 						self.waiting = False
 						self.running = True
 
