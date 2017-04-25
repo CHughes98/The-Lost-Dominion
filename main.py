@@ -192,12 +192,8 @@ class Game:
 						exit()
 					else:
 						pygame.mixer.music.load(os.path.join(path.dirname(__file__), "snd", "song1.wav"))
-<<<<<<< HEAD
 						pygame.mixer.music.play(loops = -1)
-=======
-						pygame.mixer.music.play()
-						pygame.mixer.music.play(loops=-1)
->>>>>>> 521e9ff54559c92169097f40df7a2037f90f2e1d
+
 						self.waiting = False
 						self.running = True
 
