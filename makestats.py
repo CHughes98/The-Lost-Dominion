@@ -1,6 +1,6 @@
 def makeHealth(wave):
 	healthbase = 9
-	health = healthbase + (float(wave))**1.20
+	health = healthbase + (wave)**1.20
 	return health
 def makeStrength(wave):
 	strbase = 0
