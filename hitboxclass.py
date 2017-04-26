@@ -2,11 +2,8 @@ import pygame
 from settings import *
 
 class Hitbox(pygame.sprite.Sprite):
-  def __init__(self, x, y):
+  def __init__(self, spawn):
     pygame.sprite.Sprite.__init__(self)
-    self.hitbox = pygame.Surface((24, 24))
+    self.hitbox = pygame.Surface((24, 32))
     self.rect = self.hitbox.get_rect()
-    self.rect.midleftx = x
-    self.rect.bottomlefty = y
-    
- 
+    self.rect.midleft = spawn

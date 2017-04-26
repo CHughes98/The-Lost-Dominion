@@ -7,6 +7,7 @@ from playerclass import *
 from mobclass import *
 from levelclass import *
 from os import *
+from hitboxclass import *
 import os
 import makestats
 import highscore
@@ -81,7 +82,7 @@ class Game:
 		surf.blit(text_surface, text_rect)
 
 	def attack(self):
-		attack_radius = Hitbox(self, self.player.rect.centerx, self.player.rect.bottom)
+		attack_radius = Hitbox(self.player.rect.center)
 		hits = pygame.sprite.spritecollide(attack_radius, self.mobs, False)
 		if hits:
 			for hit in hits:
