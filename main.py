@@ -19,6 +19,10 @@ class Game:
 		pygame.mixer.init()
 		self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
+		self.wave = 0
+		self.all_sprites = pygame.sprite.Group()
+		self.mobs = pygame.sprite.Group()
+
 		pygame.display.set_caption("The Lost Dominion")
 		self.clock = pygame.time.Clock()
 		self.load_data()
@@ -125,10 +129,11 @@ class Game:
 
 	def new(self):
         # Start a New Game
-		self.all_sprites = pygame.sprite.Group()
 		self.player = Player(self, 9, 17, 100, 0)
 		self.all_sprites.add(self.player)
-		self.mobs = pygame.sprite.Group()
+		self.wave += 1
+		self.high = highscore.check_high_score(self.wave)
+
 		self.mob_amt = 7
 
 		for i in range(self.mob_amt):
@@ -143,6 +148,9 @@ class Game:
 			self.events()
 			self.update()
 			self.draw()
+			if self.mob_amt == 0:
+				self.all_sprites.empty()
+				self.new()
 
 	def events(self):
 		# Game loop - Events
@@ -172,6 +180,8 @@ class Game:
 		self.all_sprites.draw(self.screen)
 
 		self.screen.blit(self.icon, (8, HEIGHT - 132))
+		self.draw_text(self.screen, "Current Wave: " + str(self.wave), 32, WIDTH - 164, 32, (112, 1, 1))
+		self.draw_text(self.screen, "Personal Best: " + str(self.high), 32, WIDTH - 164, 64, (112, 1, 1))
 		self.draw_enemies(self.screen, 152, HEIGHT - 132, self.mob_icon)
 		self.draw_bar(self.screen, 136, HEIGHT - 70, self.player.hp, RED)
 		self.draw_bar(self.screen, 136, HEIGHT - 38, self.player.amr, GREY)
