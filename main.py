@@ -123,7 +123,7 @@ class Game:
 	        surf.blit(img, img_rect)
 
 	def create_enemies(self, x, y):
-		self.mob = Mob(self, x, y, makestats.makeHealth(1), makestats.makeStrength(1))
+		self.mob = Mob(self, x, y, makestats.makeHealth(self.wave), makestats.makeStrength(self.wave))
 		self.all_sprites.add(self.mob)
 		self.mobs.add(self.mob)
 
