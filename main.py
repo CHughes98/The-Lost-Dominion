@@ -72,13 +72,13 @@ class Game:
 
 	def draw_bar(self, surf, x, y, pct, bar_color):
 		"""Draws a bar on the screen"""
-	    if pct < 0:
-	        pct = 0
-	    fill = (pct / 100) * BAR_LENGTH
-	    outline_rect = pygame.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
-	    fill_rect = pygame.Rect(x, y, fill, BAR_HEIGHT)
-	    pygame.draw.rect(surf, bar_color, fill_rect)
-	    pygame.draw.rect(surf, BLACK, outline_rect, 2)
+		if pct < 0:
+			pct = 0
+		fill = (pct / 100) * BAR_LENGTH
+		outline_rect = pygame.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
+		fill_rect = pygame.Rect(x, y, fill, BAR_HEIGHT)
+		pygame.draw.rect(surf, bar_color, fill_rect)
+		pygame.draw.rect(surf, BLACK, outline_rect, 2)
 
 	def draw_text(self, surf, text, size, x, y, color):
 		"""Writes text on the screen"""
@@ -124,21 +124,20 @@ class Game:
 
 	def draw_enemies(self, surf, x, y, img):
 		"""Draws the enemy heads on the screen"""
-	    for i in range(self.mob_amt):
-	        img_rect = img.get_rect()
-	        img_rect.x = x + (72 * i)
-	        img_rect.y = y
-	        surf.blit(img, img_rect)
+		for i in range(self.mob_amt):
+			img_rect = img.get_rect()
+			img_rect.x = x + (72 * i)
+			img_rect.y = y
+			surf.blit(img, img_rect)
 
 	def create_enemies(self, x, y):
 		"""Creates an enemy"""
-		self.mob = Mob(self, x, y, makestats.makeHealth(1), makestats.makeStrength(1))
 		self.mob = Mob(self, x, y, makestats.makeHealth(self.wave), makestats.makeStrength(self.wave))
 		self.all_sprites.add(self.mob)
 		self.mobs.add(self.mob)
 
 	def new(self):
-        """ Starts a new iteration of the game"""
+		"""Starts a new iteration of the game"""
 		self.player = Player(self, 9, 17, 100, 0)
 		self.all_sprites.add(self.player)
 		self.wave += 1
