@@ -160,6 +160,9 @@ class Game:
 			if self.mob_amt == 0:
 				self.all_sprites.empty()
 				self.new()
+			if self.player.hp <= 0:
+				self.all_sprites.empty()
+				self.playing = False
 
 	def events(self):
 		"""The events portion of the game loop; checks for key presses and anything that might happen in the game"""
@@ -216,8 +219,8 @@ class Game:
 						self.running = True
 
 	def show_go_screen(self):
-		# Game over/continue
-		pass
+		self.wave = 0
+		self.run()
 
 def main():
 	g = Game()
