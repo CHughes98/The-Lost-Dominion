@@ -20,6 +20,7 @@ class Game:
 		self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 		self.wave = 0
+		self.amr = 0
 		self.all_sprites = pygame.sprite.Group()
 		self.mobs = pygame.sprite.Group()
 
@@ -70,14 +71,15 @@ class Game:
 			self.player.moveUp()
 			self.player.pos = self.player.moveUpPos()
 
-	def draw_bar(self, surf, x, y, pct, bar_color):
+	def draw_bar(self, surf, x, y, pct, orig_pct, bar_color):
 		"""Draws a bar on the screen"""
 		if pct < 0:
 			pct = 0
-		fill = (pct / 100) * BAR_LENGTH
+		if pct != 0:
+			fill = (pct / orig_pct) * BAR_LENGTH
+			fill_rect = pygame.Rect(x, y, fill, BAR_HEIGHT)
+			pygame.draw.rect(surf, bar_color, fill_rect)
 		outline_rect = pygame.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
-		fill_rect = pygame.Rect(x, y, fill, BAR_HEIGHT)
-		pygame.draw.rect(surf, bar_color, fill_rect)
 		pygame.draw.rect(surf, BLACK, outline_rect, 2)
 
 	def draw_text(self, surf, text, size, x, y, color):
@@ -107,9 +109,12 @@ class Game:
 		hits = pygame.sprite.spritecollide(self.player, self.mobs, False)
 		if hits:
 			for hit in hits:
-				self.player.hp -= self.mob.attackStrength
-				if self.player.hp <= 0:
-					self.player.kill()
+				self.player.amr -= self.mob.attackStrength
+				if self.player.amr <= 0:
+					self.player.amr = 0
+					self.player.hp -= self.mob.attackStrength
+					if self.player.hp <= 0:
+						self.player.kill()
 
 	def set_boundaries(self):
 		"""Defines the boundaries of the map"""
@@ -136,11 +141,24 @@ class Game:
 		self.all_sprites.add(self.mob)
 		self.mobs.add(self.mob)
 
+	def roll_stats(self):
+		end_of_wave_roll = random.randrange(1, 3)
+		if(end_of_wave_roll == 1):
+			self.player.amr += 25
+		elif(end_of_wave_roll == 2):
+			self.player.spd += .3
+		else:
+			self.player.multiplier += .5
+
 	def new(self):
 		"""Starts a new iteration of the game"""
-		self.player = Player(self, 9, 17, 100, 0)
+		self.player = Player(self, 9, 17, 100, 0, 1, 1)
 		self.all_sprites.add(self.player)
+		self.player.amr = self.amr
+		self.roll_stats()
+		self.new_amr = self.player.amr
 		self.wave += 1
+		print(self.wave, "This is a new wave")
 		self.high = highscore.check_high_score(self.wave)
 
 		self.mob_amt = 7
@@ -159,6 +177,7 @@ class Game:
 			self.draw()
 			if self.mob_amt == 0:
 				self.all_sprites.empty()
+				self.amr = self.player.amr
 				self.new()
 			if self.player.hp <= 0:
 				self.all_sprites.empty()
@@ -171,13 +190,11 @@ class Game:
 			# Check for closing the window
 			if event.type == pygame.QUIT:
 				self.playing = False
-				self.running = False
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_SPACE:
 					self.attack()
 				if event.key == pygame.K_ESCAPE:
 					self.playing = False
-					self.running = False
 		self.movement()
 		self.set_boundaries()
 		self.get_hit()
@@ -194,13 +211,13 @@ class Game:
 		self.draw_text(self.screen, "Current Wave: " + str(self.wave), 32, WIDTH - 164, 32, (255, 255, 255))
 		self.draw_text(self.screen, "Personal Best: " + str(self.high), 32, WIDTH - 164, 64, (255, 255, 255))
 		self.draw_enemies(self.screen, 152, HEIGHT - 132, self.mob_icon)
-		self.draw_bar(self.screen, 136, HEIGHT - 70, self.player.hp, RED)
-		self.draw_bar(self.screen, 136, HEIGHT - 38, self.player.amr, GREY)
+		self.draw_bar(self.screen, 136, HEIGHT - 70, self.player.hp, 100, RED)
+		self.draw_bar(self.screen, 136, HEIGHT - 38, self.player.amr, self.new_amr, GREY)
 		pygame.display.flip()
 
 	def show_start_screen(self):
 		self.screen.blit(self.map_img, self.map_rect)
-		self.draw_text(self.screen, "Press any key to begin!", 36, 648, 512, BLACK)
+		self.draw_text(self.screen, "Press enter to begin!", 36, 648, 512, BLACK)
 		self.screen.blit(self.logo, (240, 64))
 		pygame.display.flip()
 		self.waiting = True
@@ -212,7 +229,7 @@ class Game:
 				if event.type == pygame.KEYUP:
 					if event.key == pygame.K_ESCAPE:
 						exit()
-					else:
+					elif event.key == pygame.K_RETURN:
 						pygame.mixer.music.load(os.path.join(path.dirname(__file__), "snd", "song1.wav"))
 						pygame.mixer.music.play(loops = -1)
 
@@ -220,7 +237,24 @@ class Game:
 						self.running = True
 
 	def show_go_screen(self):
-		self.wave = 0
+		self.screen.blit(self.map_img, self.map_rect)
+		self.draw_text(self.screen, "You made it to wave " + str(self.wave) + "!", 36, 648, 364, WHITE)
+		self.draw_text(self.screen, "Your personal best is wave " + str(self.high) + "!", 36, 648, 412, WHITE)
+		self.draw_text(self.screen, "Press enter to restart!", 36, 648, 512, WHITE)
+		self.screen.blit(self.logo, (240, 64))
+		pygame.display.flip()
+		self.waiting = True
+		while self.waiting:
+			self.clock.tick(FPS)
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					exit()
+				if event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						exit()
+					elif event.key == pygame.K_RETURN:
+						self.wave = 0
+						self.waiting = False
 
 def main():
 	g = Game()
