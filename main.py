@@ -144,7 +144,7 @@ class Game:
 		self.mobs.add(self.mob)
 
 	def roll_stats(self):
-		end_of_wave_roll = random.randrange(1, 3)
+		end_of_wave_roll = random.randrange(1, 4)
 		if(end_of_wave_roll == 1):
 			self.player.amr += 25
 			self.update_text = "The gods have granted you armor!"
@@ -199,6 +199,7 @@ class Game:
 				if event.key == pygame.K_SPACE:
 					self.attack()
 				if event.key == pygame.K_ESCAPE:
+					self.all_sprites.empty()
 					self.playing = False
 		self.movement()
 		self.set_boundaries()
