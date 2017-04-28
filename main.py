@@ -99,10 +99,11 @@ class Game:
 			for hit in hits:
 				self.player.strike()
 				hit.hp -= self.player.dmg
-				print(hit.hp)
+				self.update_text = "You attacked for " + str(int(self.player.dmg)) + " damage!"
 				if hit.hp <= 0:
 					hit.kill()
 					self.mob_amt -= 1
+					self.update_text = "You have slain a demon!"
 
 	def get_hit(self):
 		"""Checks to see if a mob has attacked the player and recieves damage"""
@@ -113,8 +114,9 @@ class Game:
 				if self.player.amr <= 0:
 					self.player.amr = 0
 					self.player.hp -= self.mob.attackStrength
-					if self.player.hp <= 0:
-						self.player.kill()
+				self.update_text = "You are taking damage!"
+				if self.player.hp <= 0:
+					self.player.kill()
 
 	def set_boundaries(self):
 		"""Defines the boundaries of the map"""
@@ -145,10 +147,13 @@ class Game:
 		end_of_wave_roll = random.randrange(1, 3)
 		if(end_of_wave_roll == 1):
 			self.player.amr += 25
+			self.update_text = "The gods have granted you armor!"
 		elif(end_of_wave_roll == 2):
 			self.player.spd += .3
+			self.update_text = "The gods have made you faster!"
 		else:
 			self.player.multiplier += .5
+			self.update_text = "The gods have made you stronger!"
 
 	def new(self):
 		"""Starts a new iteration of the game"""
@@ -189,7 +194,7 @@ class Game:
 		for event in pygame.event.get():
 			# Check for closing the window
 			if event.type == pygame.QUIT:
-				self.playing = False
+				exit()
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_SPACE:
 					self.attack()
@@ -208,8 +213,9 @@ class Game:
 		self.screen.blit(self.map_img, self.map_rect)
 		self.all_sprites.draw(self.screen)
 		self.screen.blit(self.icon, (8, HEIGHT - 132))
-		self.draw_text(self.screen, "Current Wave: " + str(self.wave), 32, WIDTH - 164, 32, (255, 255, 255))
-		self.draw_text(self.screen, "Personal Best: " + str(self.high), 32, WIDTH - 164, 64, (255, 255, 255))
+		self.draw_text(self.screen, self.update_text, 24, WIDTH - 256, HEIGHT - 32, WHITE)
+		self.draw_text(self.screen, "Current Wave: " + str(self.wave), 32, WIDTH - 164, 32, WHITE)
+		self.draw_text(self.screen, "Personal Best: " + str(self.high), 32, WIDTH - 164, 64, WHITE)
 		self.draw_enemies(self.screen, 152, HEIGHT - 132, self.mob_icon)
 		self.draw_bar(self.screen, 136, HEIGHT - 70, self.player.hp, 100, RED)
 		self.draw_bar(self.screen, 136, HEIGHT - 38, self.player.amr, self.new_amr, GREY)
