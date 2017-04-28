@@ -226,7 +226,7 @@ class Game:
 		self.draw_text(self.screen, "Press enter to begin!", 36, 648, 512, BLACK)
 		self.screen.blit(self.logo, (240, 64))
 		pygame.mixer.music.load(os.path.join(path.dirname(__file__), "snd", "menu.mp3"))
-		pygame.mixer.music.play()
+		pygame.mixer.music.play(loops = -1)
 		pygame.display.flip()
 		self.waiting = True
 		while self.waiting:
