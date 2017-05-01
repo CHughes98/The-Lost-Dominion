@@ -10,3 +10,6 @@ def check_high_score(wave):
     except FileNotFoundError:
         score = open("highscore.txt", "w")
         score.write(str(wave))
+def reset_high_score():
+    score = open("highscore.txt","w")
+    score.write("0")

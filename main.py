@@ -24,6 +24,8 @@ class Game:
 		self.addspd = 0
 		self.addmult = 0
 		self.cheatcode = "38384040373937396665"
+		self.newgame = "78698771657769"
+		self.resethigh = ""
 		self.cheater = ""
 		self.all_sprites = pygame.sprite.Group()
 		self.mobs = pygame.sprite.Group()
@@ -251,19 +253,42 @@ class Game:
 						exit()
 					if event.key == pygame.K_UP:
 						self.cheater += "38"
+						print("Up")
 					if event.key == pygame.K_DOWN:
 						self.cheater += "40"
+						print("Down")
 					if event.key == pygame.K_LEFT:
 						self.cheater += "37"
+						print("Left")
 					if event.key == pygame.K_RIGHT:
 						self.cheater += "39"
+						print("Right")
 					if event.key == pygame.K_a:
 						self.cheater += "65"
+						self.resethigh += "65"
+						print("a")
 					if event.key == pygame.K_b:
 						self.cheater += "66"
+						print("b")
+					if event.key == pygame.K_n:
+						self.resethigh += "78"
+						print("n")
+					if event.key == pygame.K_e:
+						self.resethigh += "69"
+						print("e")
+					if event.key == pygame.K_w:
+						self.resethigh += "87"
+						print("w")
+					if event.key == pygame.K_g:
+						print("g")
+						self.resethigh += "71"
+					if event.key == pygame.K_m:
+						print("m")
+						self.resethigh += "77"
 					if event.key == pygame.K_r:
 						self.cheater = ""
-						print("Code reset")
+						self.resethigh = ""
+						print("Codes reset")
 					elif event.key == pygame.K_RETURN:
 						pygame.mixer.music.load(os.path.join(path.dirname(__file__), "snd", "song1.wav"))
 						pygame.mixer.music.play(loops = -1)
@@ -272,6 +297,10 @@ class Game:
 							self.amr = 1000
 							print("YOU CHEATER")
 							self.cheater = ""
+						if self.resethigh == self.newgame:
+							highscore.reset_high_score()
+							print("Score Reset")
+
 						self.waiting = False
 						self.running = True
 
