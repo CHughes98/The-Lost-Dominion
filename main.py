@@ -271,6 +271,7 @@ class Game:
 							self.addmult = 10
 							self.amr = 1000
 							print("YOU CHEATER")
+							self.cheater = ""
 						self.waiting = False
 						self.running = True
 
@@ -290,7 +291,26 @@ class Game:
 				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						exit()
+					if event.key == pygame.K_UP:
+						self.cheater += "38"
+					if event.key == pygame.K_DOWN:
+						self.cheater += "40"
+					if event.key == pygame.K_LEFT:
+						self.cheater += "37"
+					if event.key == pygame.K_RIGHT:
+						self.cheater += "39"
+					if event.key == pygame.K_a:
+						self.cheater += "65"
+					if event.key == pygame.K_b:
+						self.cheater += "66"
+					if event.key == pygame.K_r:
+						self.cheater = ""
+						print("Code reset")
 					elif event.key == pygame.K_RETURN:
+						if self.cheater == self.cheatcode:
+							self.addmult = 10
+							self.amr = 1000
+							print("YOU CHEATER")
 						self.wave = 0
 						self.waiting = False
 
