@@ -135,7 +135,7 @@ class Game:
 		"""Draws the enemy heads on the screen"""
 		for i in range(self.mob_amt):
 			img_rect = img.get_rect()
-			img_rect.x = x + (72 * i)
+			img_rect.x = x + (70 * i)
 			img_rect.y = y
 			surf.blit(img, img_rect)
 
@@ -170,10 +170,14 @@ class Game:
 		print(self.wave, "This is a new wave")
 		self.high = highscore.check_high_score(self.wave)
 
-		self.mob_amt = 7
+		self.mob_amt = 9
 
 		for i in range(self.mob_amt):
-			self.create_enemies(44, 6 + (i * 1.5))
+			if i % 2 != 0:
+				x = 40
+			else:
+				x = 44
+			self.create_enemies(x, 7 + (i * 2))
 
 
 	def run(self):
