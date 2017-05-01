@@ -18,6 +18,7 @@ class Player(pygame.sprite.Sprite):
 		self.multiplier = multiplier
 		self.spd = speed
 		self.dmg = 0
+		
 
 	def moveDown(self):
 		self.rect.bottom += self.spd

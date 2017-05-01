@@ -21,6 +21,8 @@ class Game:
 
 		self.wave = 0
 		self.amr = 0
+		self.addspd = 0
+		self.addmult = 0
 		self.all_sprites = pygame.sprite.Group()
 		self.mobs = pygame.sprite.Group()
 
@@ -149,10 +151,10 @@ class Game:
 			self.player.amr += 25
 			self.update_text = "The gods have granted you armor!"
 		elif(end_of_wave_roll == 2):
-			self.player.spd += .3
+			self.addspd += .3
 			self.update_text = "The gods have made you faster!"
 		else:
-			self.player.multiplier += .5
+			self.addmult += .5
 			self.update_text = "The gods have made you stronger!"
 
 	def new(self):
@@ -162,6 +164,8 @@ class Game:
 		self.player.amr = self.amr
 		self.roll_stats()
 		self.new_amr = self.player.amr
+		self.player.multiplier+=self.addmult
+		self.player.spd += self.addspd
 		self.wave += 1
 		print(self.wave, "This is a new wave")
 		self.high = highscore.check_high_score(self.wave)
@@ -170,6 +174,7 @@ class Game:
 
 		for i in range(self.mob_amt):
 			self.create_enemies(44, 6 + (i * 1.5))
+
 
 	def run(self):
 		"""Runs the Game Loop"""
