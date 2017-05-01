@@ -25,7 +25,6 @@ class Game:
 		self.addmult = 0
 		self.cheatcode = "38384040373937396665"
 		self.newgame = "78698771657769"
-		self.resethigh = ""
 		self.cheater = ""
 		self.all_sprites = pygame.sprite.Group()
 		self.mobs = pygame.sprite.Group()
@@ -265,29 +264,28 @@ class Game:
 						print("Right")
 					if event.key == pygame.K_a:
 						self.cheater += "65"
-						self.resethigh += "65"
 						print("a")
 					if event.key == pygame.K_b:
 						self.cheater += "66"
 						print("b")
 					if event.key == pygame.K_n:
-						self.resethigh += "78"
+						self.cheater += "78"
 						print("n")
 					if event.key == pygame.K_e:
-						self.resethigh += "69"
+						self.cheater += "69"
 						print("e")
 					if event.key == pygame.K_w:
-						self.resethigh += "87"
+						self.cheater += "87"
 						print("w")
 					if event.key == pygame.K_g:
 						print("g")
-						self.resethigh += "71"
+						self.cheater += "71"
 					if event.key == pygame.K_m:
 						print("m")
-						self.resethigh += "77"
+						self.cheater += "77"
 					if event.key == pygame.K_r:
 						self.cheater = ""
-						self.resethigh = ""
+
 						print("Codes reset")
 					elif event.key == pygame.K_RETURN:
 						pygame.mixer.music.load(os.path.join(path.dirname(__file__), "snd", "song1.wav"))
@@ -297,10 +295,10 @@ class Game:
 							self.amr = 1000
 							print("YOU CHEATER")
 							self.cheater = ""
-						if self.resethigh == self.newgame:
+						if self.cheater == self.newgame:
 							highscore.reset_high_score()
 							print("Score Reset")
-
+							self.cheater = ""
 						self.waiting = False
 						self.running = True
 
@@ -322,16 +320,37 @@ class Game:
 						exit()
 					if event.key == pygame.K_UP:
 						self.cheater += "38"
+						print("Up")
 					if event.key == pygame.K_DOWN:
 						self.cheater += "40"
+						print("Down")
 					if event.key == pygame.K_LEFT:
 						self.cheater += "37"
+						print("Left")
 					if event.key == pygame.K_RIGHT:
 						self.cheater += "39"
+						print("Right")
 					if event.key == pygame.K_a:
 						self.cheater += "65"
+						print("a")
 					if event.key == pygame.K_b:
 						self.cheater += "66"
+						print("b")
+					if event.key == pygame.K_n:
+						self.cheater += "78"
+						print("n")
+					if event.key == pygame.K_e:
+						self.cheater += "69"
+						print("e")
+					if event.key == pygame.K_w:
+						self.cheater += "87"
+						print("w")
+					if event.key == pygame.K_g:
+						print("g")
+						self.cheater += "71"
+					if event.key == pygame.K_m:
+						print("m")
+						self.cheater += "77"
 					if event.key == pygame.K_r:
 						self.cheater = ""
 						print("Code reset")
@@ -340,6 +359,10 @@ class Game:
 							self.addmult = 10
 							self.amr = 1000
 							print("YOU CHEATER")
+						if self.cheater == self.newgame:
+							highscore.reset_high_score()
+							print("Score Reset")
+							self.cheater = ""
 						self.wave = 0
 						self.waiting = False
 
