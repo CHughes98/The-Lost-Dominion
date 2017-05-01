@@ -23,6 +23,8 @@ class Game:
 		self.amr = 0
 		self.addspd = 0
 		self.addmult = 0
+		self.cheatcode = "38384040373937396665"
+		self.cheater = ""
 		self.all_sprites = pygame.sprite.Group()
 		self.mobs = pygame.sprite.Group()
 
@@ -247,10 +249,28 @@ class Game:
 				if event.type == pygame.KEYUP:
 					if event.key == pygame.K_ESCAPE:
 						exit()
+					if event.key == pygame.K_UP:
+						self.cheater += "38"
+					if event.key == pygame.K_DOWN:
+						self.cheater += "40"
+					if event.key == pygame.K_LEFT:
+						self.cheater += "37"
+					if event.key == pygame.K_RIGHT:
+						self.cheater += "39"
+					if event.key == pygame.K_a:
+						self.cheater += "65"
+					if event.key == pygame.K_b:
+						self.cheater += "66"
+					if event.key == pygame.K_r:
+						self.cheater = ""
+						print("Code reset")
 					elif event.key == pygame.K_RETURN:
 						pygame.mixer.music.load(os.path.join(path.dirname(__file__), "snd", "song1.wav"))
 						pygame.mixer.music.play(loops = -1)
-
+						if self.cheater == self.cheatcode:
+							self.addmult = 10
+							self.amr = 1000
+							print("YOU CHEATER")
 						self.waiting = False
 						self.running = True
 
