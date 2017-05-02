@@ -20,7 +20,7 @@ class Game:
 		self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 		self.wave = 0
-		self.addamr = 0
+		self.amr = 0
 		self.addspd = 0
 		self.addmult = 0
 		self.cheatcode = [273,273,274,274,276,275,276,275,98,97]
@@ -35,7 +35,6 @@ class Game:
 
 	def load_data(self):
 		"""Loads all game data"""
-
 		# Loads folders
 		game_folder = os.path.dirname(__file__)
 		img_folder = os.path.join(game_folder, 'img')
@@ -149,9 +148,10 @@ class Game:
 		self.mobs.add(self.mob)
 
 	def roll_stats(self):
+		"""Rolls a stat boost at the end of the round"""
 		end_of_wave_roll = random.randrange(1, 4)
 		if(end_of_wave_roll == 1):
-			self.addamr += 25
+			self.player.amr += 25
 			self.update_text = "The gods have granted you armor!"
 		elif(end_of_wave_roll == 2):
 			self.addspd += .3
@@ -164,8 +164,8 @@ class Game:
 		"""Starts a new iteration of the game"""
 		self.player = Player(self, 9, 17, 100, 0, 1, 1)
 		self.all_sprites.add(self.player)
+		self.player.amr = self.amr
 		self.roll_stats()
-		self.player.amr += self.addamr
 		self.player.spd += self.addspd
 		self.player.multiplier += self.addmult
 		self.maxamr = self.player.amr
@@ -203,7 +203,7 @@ class Game:
 			if self.player.hp <= 0:
 				self.all_sprites.empty()
 				self.mobs.empty()
-				self.addamr = 0
+				self.amr = 0
 				self.addspd = 0
 				self.addmult = 0
 				self.playing = False
@@ -220,7 +220,7 @@ class Game:
 					self.attack()
 				if event.key == pygame.K_ESCAPE:
 					self.all_sprites.empty()
-					self.addamr = 0
+					self.amr = 0
 					self.addspd = 0
 					self.addmult = 0
 					self.playing = False
@@ -246,6 +246,7 @@ class Game:
 		pygame.display.flip()
 
 	def show_start_screen(self):
+		"""Creates a start up splash screen"""
 		self.screen.blit(self.map_img, self.map_rect)
 		self.draw_text(self.screen, "Press enter to begin!", 36, 648, 512, BLACK)
 		self.screen.blit(self.logo, (240, 64))
@@ -285,6 +286,7 @@ class Game:
 						self.running = True
 
 	def show_go_screen(self):
+		"""Creates a game over screen"""
 		self.screen.blit(self.map_img, self.map_rect)
 		self.draw_text(self.screen, "You made it to wave " + str(self.wave) + "!", 36, 648, 364, WHITE)
 		self.draw_text(self.screen, "Your personal best is wave " + str(self.high) + "!", 36, 648, 412, WHITE)
