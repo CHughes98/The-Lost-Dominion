@@ -23,9 +23,9 @@ class Game:
 		self.addamr = 0
 		self.addspd = 0
 		self.addmult = 0
-		self.cheatcode = "38384040373937396665"
-		self.newgame = "78698771657769"
-		self.cheater = ""
+		self.cheatcode = [273,273,274,274,276,275,276,275,98,97]
+		self.newgame = [110,101,119,103,97,109,101]
+		self.cheater = []
 		self.all_sprites = pygame.sprite.Group()
 		self.mobs = pygame.sprite.Group()
 
@@ -261,43 +261,14 @@ class Game:
 				if event.type == pygame.KEYUP:
 					if event.key == pygame.K_ESCAPE:
 						exit()
-					if event.key == pygame.K_UP:
-						self.cheater += "38"
-						print("Up")
-					if event.key == pygame.K_DOWN:
-						self.cheater += "40"
-						print("Down")
-					if event.key == pygame.K_LEFT:
-						self.cheater += "37"
-						print("Left")
-					if event.key == pygame.K_RIGHT:
-						self.cheater += "39"
-						print("Right")
-					if event.key == pygame.K_a:
-						self.cheater += "65"
-						print("a")
-					if event.key == pygame.K_b:
-						self.cheater += "66"
-						print("b")
-					if event.key == pygame.K_n:
-						self.cheater += "78"
-						print("n")
-					if event.key == pygame.K_e:
-						self.cheater += "69"
-						print("e")
-					if event.key == pygame.K_w:
-						self.cheater += "87"
-						print("w")
-					if event.key == pygame.K_g:
-						print("g")
-						self.cheater += "71"
-					if event.key == pygame.K_m:
-						print("m")
-						self.cheater += "77"
-					if event.key == pygame.K_r:
-						self.cheater = ""
+					if event.key != pygame.K_ESCAPE and event.key != pygame.K_RETURN:
+						if event.key == pygame.K_r:
+							self.cheater = []
+							print("Code reset")
+						if event.key != pygame.K_r:
+							self.cheater.append(event.key)
 
-						print("Codes reset")
+
 					elif event.key == pygame.K_RETURN:
 						pygame.mixer.music.load(os.path.join(path.dirname(__file__), "snd", "song1.wav"))
 						pygame.mixer.music.play(loops = -1)
@@ -305,11 +276,11 @@ class Game:
 							self.addmult = 10
 							self.addamr = 1000
 							print("YOU CHEATER")
-							self.cheater = ""
+							self.cheater = []
 						if self.cheater == self.newgame:
 							highscore.reset_high_score()
 							print("Score Reset")
-							self.cheater = ""
+							self.cheater = []
 						self.waiting = False
 						self.running = True
 
@@ -329,51 +300,24 @@ class Game:
 				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						exit()
-					if event.key == pygame.K_UP:
-						self.cheater += "38"
-						print("Up")
-					if event.key == pygame.K_DOWN:
-						self.cheater += "40"
-						print("Down")
-					if event.key == pygame.K_LEFT:
-						self.cheater += "37"
-						print("Left")
-					if event.key == pygame.K_RIGHT:
-						self.cheater += "39"
-						print("Right")
-					if event.key == pygame.K_a:
-						self.cheater += "65"
-						print("a")
-					if event.key == pygame.K_b:
-						self.cheater += "66"
-						print("b")
-					if event.key == pygame.K_n:
-						self.cheater += "78"
-						print("n")
-					if event.key == pygame.K_e:
-						self.cheater += "69"
-						print("e")
-					if event.key == pygame.K_w:
-						self.cheater += "87"
-						print("w")
-					if event.key == pygame.K_g:
-						print("g")
-						self.cheater += "71"
-					if event.key == pygame.K_m:
-						print("m")
-						self.cheater += "77"
-					if event.key == pygame.K_r:
-						self.cheater = ""
-						print("Code reset")
+
+					if event.key != pygame.K_ESCAPE and event.key != pygame.K_RETURN:
+						if event.key == pygame.K_r:
+							self.cheater = []
+							print("Code reset")
+						if event.key != pygame.K_r:
+							self.cheater.append(event.key)
+
 					elif event.key == pygame.K_RETURN:
 						if self.cheater == self.cheatcode:
 							self.addmult = 10
 							self.amr = 1000
+							self.cheater = []
 							print("YOU CHEATER")
 						if self.cheater == self.newgame:
 							highscore.reset_high_score()
 							print("Score Reset")
-							self.cheater = ""
+							self.cheater = []
 						self.wave = 0
 						self.waiting = False
 
