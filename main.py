@@ -19,6 +19,10 @@ class Game:
 		pygame.mixer.init()
 		self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
+		self.wave = 0
+		self.addamr = 0
+		self.addspd = 0
+		self.addmult = 0
 		self.cheatcode = "38384040373937396665"
 		self.newgame = "78698771657769"
 		self.cheater = ""
@@ -55,12 +59,6 @@ class Game:
 		self.map_img = self.map.make_map()
 		self.map_img = pygame.transform.scale(self.map_img, (WIDTH, HEIGHT))
 		self.map_rect = self.map_img.get_rect()
-
-	def set_variables(self):
-		self.wave = 0
-		self.amr = 0
-		self.addspd = 0
-		self.addmult = 0
 
 	def movement(self):
 		"""Contains all possible movement options"""
@@ -153,7 +151,7 @@ class Game:
 	def roll_stats(self):
 		end_of_wave_roll = random.randrange(1, 4)
 		if(end_of_wave_roll == 1):
-			self.player.amr += 25
+			self.addamr += 25
 			self.update_text = "The gods have granted you armor!"
 		elif(end_of_wave_roll == 2):
 			self.addspd += .3
@@ -161,20 +159,21 @@ class Game:
 		else:
 			self.addmult += .5
 			self.update_text = "The gods have made you stronger!"
-		print(self.player.amr)
-		print(self.addspd)
-		print(self.addmult)
 
 	def new(self):
 		"""Starts a new iteration of the game"""
 		self.player = Player(self, 9, 17, 100, 0, 1, 1)
 		self.all_sprites.add(self.player)
-		self.player.amr = self.amr
 		self.roll_stats()
-		self.new_amr = self.player.amr
-		self.player.multiplier+=self.addmult
+		self.player.amr += self.addamr
 		self.player.spd += self.addspd
+		self.player.multiplier += self.addmult
+		self.maxamr = self.player.amr
 		self.wave += 1
+		print(self.player.amr)
+		print(self.player.spd)
+		print(self.player.multiplier)
+
 		print(self.wave, "This is a new wave")
 		self.high = highscore.check_high_score(self.wave)
 
@@ -191,7 +190,6 @@ class Game:
 	def run(self):
 		"""Runs the Game Loop"""
 		self.playing = True
-		self.set_variables()
 		self.new()
 		while self.playing:
 			self.dt = self.clock.tick(FPS)/1000 #For seconds
@@ -205,7 +203,11 @@ class Game:
 			if self.player.hp <= 0:
 				self.all_sprites.empty()
 				self.mobs.empty()
+				self.addamr = 0
+				self.addspd = 0
+				self.addmult = 0
 				self.playing = False
+
 
 	def events(self):
 		"""The events portion of the game loop; checks for key presses and anything that might happen in the game"""
@@ -218,6 +220,9 @@ class Game:
 					self.attack()
 				if event.key == pygame.K_ESCAPE:
 					self.all_sprites.empty()
+					self.addamr = 0
+					self.addspd = 0
+					self.addmult = 0
 					self.playing = False
 		self.movement()
 		self.set_boundaries()
@@ -237,7 +242,7 @@ class Game:
 		self.draw_text(self.screen, "Personal Best: " + str(self.high), 32, WIDTH - 164, 64, WHITE)
 		self.draw_enemies(self.screen, 152, HEIGHT - 132, self.mob_icon)
 		self.draw_bar(self.screen, 136, HEIGHT - 70, self.player.hp, 100, RED)
-		self.draw_bar(self.screen, 136, HEIGHT - 38, self.player.amr, self.new_amr, GREY)
+		self.draw_bar(self.screen, 136, HEIGHT - 38, self.player.amr, self.maxamr, GREY)
 		pygame.display.flip()
 
 	def show_start_screen(self):
@@ -298,7 +303,7 @@ class Game:
 						pygame.mixer.music.play(loops = -1)
 						if self.cheater == self.cheatcode:
 							self.addmult = 10
-							self.amr = 1000
+							self.addamr = 1000
 							print("YOU CHEATER")
 							self.cheater = ""
 						if self.cheater == self.newgame:
