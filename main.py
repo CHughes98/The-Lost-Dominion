@@ -19,10 +19,6 @@ class Game:
 		pygame.mixer.init()
 		self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-		self.wave = 0
-		self.amr = 0
-		self.addspd = 0
-		self.addmult = 0
 		self.cheatcode = "38384040373937396665"
 		self.newgame = "78698771657769"
 		self.cheater = ""
@@ -59,6 +55,12 @@ class Game:
 		self.map_img = self.map.make_map()
 		self.map_img = pygame.transform.scale(self.map_img, (WIDTH, HEIGHT))
 		self.map_rect = self.map_img.get_rect()
+
+	def set_variables(self):
+		self.wave = 0
+		self.amr = 0
+		self.addspd = 0
+		self.addmult = 0
 
 	def movement(self):
 		"""Contains all possible movement options"""
@@ -159,6 +161,9 @@ class Game:
 		else:
 			self.addmult += .5
 			self.update_text = "The gods have made you stronger!"
+		print(self.player.amr)
+		print(self.addspd)
+		print(self.addmult)
 
 	def new(self):
 		"""Starts a new iteration of the game"""
@@ -186,6 +191,7 @@ class Game:
 	def run(self):
 		"""Runs the Game Loop"""
 		self.playing = True
+		self.set_variables()
 		self.new()
 		while self.playing:
 			self.dt = self.clock.tick(FPS)/1000 #For seconds
