@@ -1,3 +1,4 @@
+'''Alex Schwartzberg: Primary Designer and Coder'''
 import pygame
 import random
 import math

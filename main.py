@@ -1,3 +1,5 @@
+'''Colin Hughes: Primary Designer and Coder of GUI Logic, Bren Stace: Primary tester of code and editing of bugs, 
+Dylan Van Manen: Edits and constitutent of design process, Alex Schwartzberg: Added logic for loading data, events, and controlling models(made minor edits for efficiency)'''
 #Imports
 import pygame
 import random
