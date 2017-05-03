@@ -1,3 +1,4 @@
+# Written by Alex Schwartzberg and Collin Hughes
 import pygame
 import random
 import settings
@@ -19,7 +20,7 @@ class Player(pygame.sprite.Sprite):
 		self.multiplier = multiplier
 		self.spd = speed
 		self.dmg = 0
-		
+
 	def moveDown(self):
 		self.rect.bottom += self.spd
 
