@@ -1,3 +1,4 @@
+# Written by Collin Hughes and Alex Schwartzberg
 WIDTH = 1280
 HEIGHT = 720
 FPS = 60
