@@ -1,4 +1,4 @@
-# Written by Dylan Van Manen and Collin Hughes
+"""Dylan Van Manen: Primary Designer, Collin Hughes: Coder"""
 import pygame
 from settings import *
 

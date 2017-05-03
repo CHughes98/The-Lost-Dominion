@@ -1,4 +1,4 @@
-# Written by Alex Schwartzberg and Collin Hughes
+"""Written by Alex Schwartzberg and Collin Hughes"""
 import pygame
 import random
 import settings

@@ -1,4 +1,4 @@
-# Written by Collin Hughes
+"""Collin Hughes: Primary Designer and Coder"""
 import pygame
 import pytmx
 import random
