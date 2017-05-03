@@ -1,3 +1,4 @@
+# Written by Dylan Van Manen and Collin Hughes
 import pygame
 from settings import *
 
