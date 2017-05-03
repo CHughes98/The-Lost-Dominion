@@ -1,4 +1,4 @@
-"""Creates the stats for the mob, using the wave as a parameter"""
+"""Bren Stace: Creates the stats for the mob, using the wave as a parameter"""
 
 def makeHealth(wave):
 	healthbase = 9
