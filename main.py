@@ -1,4 +1,4 @@
-'''Colin Hughes: Primary Designer and Coder of GUI Logic, Bren Stace: Primary tester of code and editing of bugs, 
+'''Colin Hughes: Primary Designer and Coder of GUI Logic, Bren Stace: Primary tester of code and editing of bugs,
 Dylan Van Manen: Edits and constitutent of design process, Alex Schwartzberg: Added logic for loading data, events, and controlling models(made minor edits for efficiency)'''
 #Imports
 import pygame
@@ -25,9 +25,11 @@ class Game:
 		self.amr = 0
 		self.addspd = 0
 		self.addmult = 0
+
 		self.cheatcode = [273,273,274,274,276,275,276,275,98,97]
 		self.newgame = [110,101,119,103,97,109,101]
 		self.cheater = []
+
 		self.all_sprites = pygame.sprite.Group()
 		self.mobs = pygame.sprite.Group()
 
@@ -172,11 +174,12 @@ class Game:
 		self.player.multiplier += self.addmult
 		self.maxamr = self.player.amr
 		self.wave += 1
-		print(self.player.amr)
-		print(self.player.spd)
-		print(self.player.multiplier)
 
-		print(self.wave, "This is a new wave")
+		# print(self.player.amr)
+		# print(self.player.spd)
+		# print(self.player.multiplier)
+		# print(self.wave, "This is a new wave")
+
 		self.high = highscore.check_high_score(self.wave)
 
 		self.mob_amt = 9
@@ -304,7 +307,6 @@ class Game:
 				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						exit()
-
 					if event.key != pygame.K_ESCAPE and event.key != pygame.K_RETURN:
 						if event.key == pygame.K_r:
 							self.cheater = []
