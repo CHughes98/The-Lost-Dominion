@@ -1,3 +1,5 @@
+"""Creates the stats for the mob, using the wave as a parameter"""
+
 def makeHealth(wave):
 	healthbase = 9
 	health = healthbase + (wave)**1.20

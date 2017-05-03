@@ -1,3 +1,6 @@
+"""Function to check the player's current wave against the saved highscore file if the file exists. If the file does not exist, the file is created."""
+"""If the player has a higher wave than the recorded highscore, the highscore is replaced with the new highscore"""
+
 def check_high_score(wave):
     try:
         high = int(open("highscore.txt", "r").read())
@@ -10,6 +13,8 @@ def check_high_score(wave):
     except FileNotFoundError:
         score = open("highscore.txt", "w")
         score.write(str(wave))
+
+"""Function writes the highscore 1 to the highscore file"""
 def reset_high_score():
     score = open("highscore.txt","w")
-    score.write("0")
+    score.write("1")
